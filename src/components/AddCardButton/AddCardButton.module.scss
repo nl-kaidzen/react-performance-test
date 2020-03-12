@@ -1,0 +1,32 @@
+* {
+    box-sizing: border-box;
+}
+
+.link {
+    text-decoration: none;
+}
+
+.button {
+    display: flex;
+    width: 250px;
+    height: 250px;
+    border: 2px dashed #333333;
+    margin: 0 30px 30px;
+    background-color: white;
+    font-size: 2rem;
+    text-transform: uppercase;
+    text-align: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    padding: 0;
+    text-decoration: none;
+    align-items: center;
+    color: #333333;
+
+
+    &:hover,
+    &:focus {
+        border-style: solid;
+    }
+}

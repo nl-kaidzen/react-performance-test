@@ -1,0 +1,14 @@
+* {
+    box-sizing: border-box;
+}
+
+.list {
+    display: flex;
+    max-width: 960px;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 30px auto 0;
+    padding: 0;
+    list-style: none;
+}
