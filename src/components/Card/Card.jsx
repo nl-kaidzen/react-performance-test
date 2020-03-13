@@ -4,11 +4,15 @@ import styles from './Card.module.scss'
 const Card = (props) => {
     return(
         <li className={styles.card}>
-            <h2 className={styles.cardTitle}>Title</h2>
-            <p className={styles.cardText}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci vitae harum quod, blanditiis</p>
+            <h2 className={styles.cardTitle}>{props.cardInfo.title}</h2>
+            <p className={styles.cardText}>{props.cardInfo.text}</p>
             <div className={styles.cardButtonWrapper}>
                 <button>Edit</button>
-                <button>Like</button>
+                <button
+                    onClick={() => props.onFavoriteClick(props.cardInfo.id)}
+                >
+                    {props.cardInfo.isFavorite ? 'Dislike' : 'Like'}
+                </button>
             </div>
         </li>
     );
