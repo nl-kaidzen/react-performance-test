@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import styles from './CardForm.module.scss'
 import HeaderTitle from '../common/HeaderTitle';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 const CardForm = (props) => {
-  const [inputValue, setInputValue] = useState('');
-  const [textareaValue, setTextareaValue] = useState('');
+  const history = useHistory('/');
+  let { id } = useParams();
+  const urlId = parseInt(id);
+  let editedCard = null;
+  if (props.type === 'info') {
+    editedCard = props.cards.find((card) => card.id === urlId);
+  } 
+  const [inputValue, setInputValue] = useState( editedCard ? editedCard.title : '' );
+  const [textareaValue, setTextareaValue] = useState( editedCard ? editedCard.text : '' );
 
   const onChange = (event) => {
     const target = event.target;
@@ -15,12 +22,20 @@ const CardForm = (props) => {
     : setTextareaValue(value);
   }
 
-  const history = useHistory('/');
-  const onSaveClick = () => {
-    props.onSaveClick(inputValue, textareaValue);
-    history.push('/')
+  const onAddButtonClick = () => {
+    props.onAddCard(inputValue, textareaValue);
+    history.push('/');
   }
 
+  const onUpdateButtonClick = () => {
+    props.onUpdateCard(urlId, inputValue, textareaValue);
+    history.push('/');
+  }
+
+  const onDeleteButtonClick = () => {
+    props.onRemoveCard(urlId);
+    history.push('/');
+  }
   return (
     <>
       <HeaderTitle title={props.type === 'new' ? 'New card' : 'Card info'} />
@@ -43,13 +58,17 @@ const CardForm = (props) => {
         {props.type === 'new' ? (
           <div className="buttonWrapper">
             <button 
-              onClick={onSaveClick}
+              onClick={onAddButtonClick}
               type="button">Save</button>
           </div>
         ) : (
             <div className="buttonWrapper">
-              <button type="button">Save</button>
-              <button type="button">Delete</button>
+              <button 
+                onClick={onUpdateButtonClick}
+                type="button">Save</button>
+              <button 
+                onClick={onDeleteButtonClick}
+                type="button">Delete</button>
             </div>
           )}
       </form>

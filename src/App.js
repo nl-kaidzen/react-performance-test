@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Switch, Route} from 'react-router-dom'
 import './App.css';
 import CardList from './components/CardList/CardList';
@@ -9,12 +9,12 @@ const App = () => {
     JSON.parse(localStorage.getItem('cards')) || []
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     localStorage.setItem('cards', JSON.stringify(cards))
   }, [cards])
-
+  
   const addCard = (title, text) => {
-    const id = new Date();
+    const id = Date.now();
     const createdCard = {
       id: id,
       title: title,
@@ -25,7 +25,22 @@ const App = () => {
     setCards([...cards, createdCard]);
   };
 
-  // const updateCard = () => {};
+  const removeCard = (id) => {
+    const newCardsArray = cards.filter((card) => card.id !== id)
+    debugger;
+    setCards([...newCardsArray]);
+  }
+
+  const updateCard = (id, title, text) => {
+    const updatedCardElement = cards.find((card) => card.id === id);
+    const newCardsArray = [...cards];
+    const updatedCardIndex = newCardsArray.indexOf(updatedCardElement);
+    const newCardElement = {...updatedCardElement};
+    newCardElement.title = title;
+    newCardElement.text = text;
+    newCardsArray[updatedCardIndex] = {...newCardElement};
+    setCards([...newCardsArray]);
+  };
 
   const toggleFavorite = (id) => {
     const cardIndex = cards.indexOf(cards.find((card) => card.id === id));
@@ -41,15 +56,24 @@ const App = () => {
           exact path='/' 
           render={(props) => <CardList {...props} 
             cards={cards}
-            onFavoriteClick={toggleFavorite}/>} 
+            onFavoriteClick={toggleFavorite}
+          />} 
         />
-        <Route path='/info/?id' />
+        <Route 
+          path='/info/:id?' 
+          render={(props) => <CardForm {...props}
+            type={'info'}
+            cards={cards}
+            onUpdateCard={updateCard}
+            onRemoveCard={removeCard}
+          />}
+        />
         <Route 
           path='/create' 
           render={(props) => <CardForm {...props}
             type={'new'}
-            onSaveClick={addCard} 
-            />} 
+            onAddCard={addCard} 
+          />} 
         />
       </Switch>
     </main>
