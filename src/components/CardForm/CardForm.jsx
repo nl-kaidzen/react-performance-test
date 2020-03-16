@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import styles from './CardForm.module.scss';
