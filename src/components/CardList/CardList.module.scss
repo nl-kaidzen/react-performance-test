@@ -1,14 +1,14 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .list {
-    display: flex;
-    max-width: 930px;
-    flex-direction: row;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    margin: 30px auto 0;
-    padding: 0;
-    list-style: none;
+  display: flex;
+  max-width: 930px;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin: 30px auto 0;
+  padding: 0;
+  list-style: none;
 }

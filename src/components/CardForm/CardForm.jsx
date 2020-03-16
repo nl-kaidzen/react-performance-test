@@ -1,41 +1,47 @@
 import React, { useState } from 'react';
-import styles from './CardForm.module.scss'
-import HeaderTitle from '../common/HeaderTitle';
 import { useHistory, useParams } from 'react-router-dom';
+import styles from './CardForm.module.scss';
+import HeaderTitle from '../common/HeaderTitle/HeaderTitle';
+import Button from '../common/Button/Button';
 
 const CardForm = (props) => {
   const history = useHistory('/');
-  let { id } = useParams();
+  const { id } = useParams();
   const urlId = parseInt(id);
+  const minInputLength = 4;
   let editedCard = null;
   if (props.type === 'info') {
     editedCard = props.cards.find((card) => card.id === urlId);
-  } 
-  const [inputValue, setInputValue] = useState( editedCard ? editedCard.title : '' );
-  const [textareaValue, setTextareaValue] = useState( editedCard ? editedCard.text : '' );
+  }
+  const [inputValue, setInputValue] = useState(editedCard ? editedCard.title : '');
+  const [textareaValue, setTextareaValue] = useState(editedCard ? editedCard.text : '');
 
   const onChange = (event) => {
-    const target = event.target;
-    const value = target.value;
+    const { target } = event;
+    const { value } = target;
     target.name === 'title'
-    ? setInputValue(value)
-    : setTextareaValue(value);
-  }
+      ? setInputValue(value)
+      : setTextareaValue(value);
+  };
 
   const onAddButtonClick = () => {
-    props.onAddCard(inputValue, textareaValue);
-    history.push('/');
-  }
+    if (inputValue.length >= minInputLength) {
+      props.onAddCard(inputValue, textareaValue);
+      history.push('/');
+    }
+  };
 
   const onUpdateButtonClick = () => {
-    props.onUpdateCard(urlId, inputValue, textareaValue);
-    history.push('/');
-  }
+    if (inputValue.length >= minInputLength) {
+      props.onUpdateCard(urlId, inputValue, textareaValue);
+      history.push('/');
+    }
+  };
 
   const onDeleteButtonClick = () => {
     props.onRemoveCard(urlId);
     history.push('/');
-  }
+  };
   return (
     <>
       <HeaderTitle title={props.type === 'new' ? 'New card' : 'Card info'} />
@@ -43,34 +49,46 @@ const CardForm = (props) => {
         <input
           className={styles.formInput}
           value={inputValue}
+          onChange={(event) => onChange(event)}
+          minLength="4"
+          maxLength="255"
           type="text"
           placeholder="Enter title"
           name="title"
-          onChange={(event) => onChange(event)} 
+          required
         />
-        <textarea 
-          className={styles.formSelect} 
+        <textarea
+          className={styles.formSelect}
           value={textareaValue}
           onChange={(event) => onChange(event)}
-          name="" id="" cols="30" rows="10" 
+          name=""
+          id=""
+          cols="30"
+          rows="10"
         />
 
         {props.type === 'new' ? (
-          <div className="buttonWrapper">
-            <button 
+          <div className={styles.formBtnWrapper}>
+            <Button
               onClick={onAddButtonClick}
-              type="button">Save</button>
+              type="default"
+              title="Save"
+            />
           </div>
         ) : (
-            <div className="buttonWrapper">
-              <button 
-                onClick={onUpdateButtonClick}
-                type="button">Save</button>
-              <button 
-                onClick={onDeleteButtonClick}
-                type="button">Delete</button>
-            </div>
-          )}
+          <div className={`${styles.formBtnWrapper} ${styles['formBtnWrapper--edit']}`}>
+            <Button
+              onClick={onUpdateButtonClick}
+              type="default"
+              title="Save"
+            />
+            <Button
+              onClick={onDeleteButtonClick}
+              type="delete"
+              title="Delete"
+            />
+          </div>
+        )}
       </form>
     </>
   );
