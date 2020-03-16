@@ -1,9 +1,9 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import Card from '../Card/Card';
 import AddCardButton from '../AddCardButton/AddCardButton';
 import HeaderTitle from '../common/HeaderTitle/HeaderTitle';
 import styles from './CardList.module.scss';
+import PropTypes from 'prop-types';
 
 const CardList = (props) => {
   const cards = props.cards.map((card) => (
@@ -25,3 +25,8 @@ const CardList = (props) => {
 };
 
 export default CardList;
+
+CardList.propTypes ={
+  cards: PropTypes.arrayOf(PropTypes.object),
+  onFavoriteClick: PropTypes.func,
+}

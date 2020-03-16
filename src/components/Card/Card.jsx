@@ -2,20 +2,22 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './Card.module.scss';
 import IconButton from '../common/IconButton/IconButton';
+import PropTypes from 'prop-types';
 
 const Card = (props) => {
   const history = useHistory('/');
   const onEditCardClick = () => {
-    history.push(`/info/${props.cardInfo.id}`);
+    history.push(`/info/${cardInfo.id}`);
   };
 
   const onFavoriteCardClick = () => {
-    props.onFavoriteClick(props.cardInfo.id);
+    props.onFavoriteClick(cardInfo.id);
   };
+  const cardInfo = {...props.cardInfo};
   return (
     <li className={styles.card}>
-      <h2 className={styles.cardTitle}>{props.cardInfo.title}</h2>
-      <p className={styles.cardText}>{props.cardInfo.text}</p>
+      <h2 className={styles.cardTitle}>{cardInfo.title}</h2>
+      <p className={styles.cardText}>{cardInfo.text}</p>
       <div className={styles.cardButtonWrapper}>
         <IconButton
           onClick={onEditCardClick}
@@ -23,7 +25,7 @@ const Card = (props) => {
         />
         <IconButton
           onClick={onFavoriteCardClick}
-          type={props.cardInfo.isFavorite ? 'dislike' : 'like'}
+          type={cardInfo.isFavorite ? 'dislike' : 'like'}
         />
       </div>
     </li>
@@ -31,3 +33,8 @@ const Card = (props) => {
 };
 
 export default Card;
+
+Card.propTypes = {
+  cardInfo: PropTypes.object,
+  onFavoriteClick: PropTypes.func,
+}

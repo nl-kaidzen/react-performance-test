@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import styles from './Button.module.scss';
+import PropTypes from 'prop-types';
 
 const TYPE_TO_CLASSNAMES_MAP = {
   default: `${styles.formButton}`,
@@ -18,3 +18,9 @@ const Button = (props) => (
 );
 
 export default Button;
+
+Button.propTypes ={ 
+  onClick: PropTypes.func,
+  type: PropTypes.oneOf(['default', 'delete']),
+  title: PropTypes.string,
+}

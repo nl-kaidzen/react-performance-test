@@ -1,9 +1,9 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import styles from './CardForm.module.scss';
 import HeaderTitle from '../common/HeaderTitle/HeaderTitle';
 import Button from '../common/Button/Button';
+import styles from './CardForm.module.scss';
+import PropTypes from 'prop-types';
 
 const CardForm = (props) => {
   const history = useHistory('/');
@@ -96,3 +96,11 @@ const CardForm = (props) => {
 };
 
 export default CardForm;
+
+CardForm.propTypes = {
+  type: PropTypes.oneOf(['new', 'info']),
+  cards: PropTypes.arrayOf(PropTypes.object),
+  onAddCard: PropTypes.func,
+  onUpdateCard: PropTypes.func,
+  onRemoveCard: PropTypes.func,
+}

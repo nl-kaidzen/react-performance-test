@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import styles from './IconButton.module.scss';
+import PropTypes from 'prop-types';
 
 const TYPE_TO_SVG_MAP = {
   edit: (<svg height="30px" viewBox="0 -1 401.52289 401" width="30px" xmlns="http://www.w3.org/2000/svg">
@@ -26,3 +26,8 @@ const IconButton = (props) => (
 );
 
 export default IconButton;
+
+IconButton.propTypes = {
+  onClick: PropTypes.func,
+  type: PropTypes.oneOf['edit', 'like', 'dislike']
+}
