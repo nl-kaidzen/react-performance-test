@@ -1,9 +1,12 @@
+/* eslint-disable no-debugger */
 import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import HeaderTitle from '../common/HeaderTitle/HeaderTitle';
 import Button from '../common/Button/Button';
-import styles from './CardForm.module.scss';
 import PropTypes from 'prop-types';
+import Input from '../common/Input/Input';
+import styles from './CardForm.module.scss';
+import validateValue from './../../helpers/validation/validation';
 
 const CardForm = (props) => {
   const history = useHistory('/');
@@ -25,6 +28,12 @@ const CardForm = (props) => {
       : setTextareaValue(value);
   };
 
+  const titleValidateSettings = {
+    required: true,
+    minLength: 4,
+    maxLength: 30,
+  }
+
   const handleAddButtonClick = () => {
     if (inputValue.length >= minInputLength) {
       props.addCard(inputValue, textareaValue);
@@ -43,20 +52,22 @@ const CardForm = (props) => {
     props.removeCard(urlId);
     history.push('/');
   };
+
+  
+
   return (
     <>
       <HeaderTitle title={props.type === 'new' ? 'New card' : 'Card info'} />
       <form className={styles.form} action="">
-        <input
-          className={styles.formInput}
+        <Input 
           value={inputValue}
-          onChange={(event) => handleChange(event)}
-          minLength="4"
-          maxLength="255"
+          handleChange={(event) => handleChange(event)}
           placeholder="Enter title"
+          errorMessage={validateValue(inputValue, titleValidateSettings).errorMessage}
+          isValid={validateValue(inputValue, titleValidateSettings).isValid}
           name="title"
-          required
         />
+
         <textarea
           className={styles.formSelect}
           value={textareaValue}

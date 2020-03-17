@@ -29,5 +29,5 @@ export default IconButton;
 
 IconButton.propTypes = {
   onClick: PropTypes.func,
-  type: PropTypes.oneOf['edit', 'like', 'dislike']
+  type: PropTypes.oneOf(['edit', 'like', 'dislike'])
 }

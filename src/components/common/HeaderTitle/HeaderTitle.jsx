@@ -9,6 +9,6 @@ const HeaderTitle = (props) => (
 
 export default HeaderTitle;
 
-HeaderTitle.PropTypes = {
+HeaderTitle.propTypes = {
   title: PropTypes.string,
 }
