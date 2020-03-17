@@ -17,7 +17,7 @@ const CardForm = (props) => {
   const [inputValue, setInputValue] = useState(editedCard ? editedCard.title : '');
   const [textareaValue, setTextareaValue] = useState(editedCard ? editedCard.text : '');
 
-  const onChange = (event) => {
+  const handleChange = (event) => {
     const { target } = event;
     const { value } = target;
     target.name === 'title'
@@ -25,21 +25,21 @@ const CardForm = (props) => {
       : setTextareaValue(value);
   };
 
-  const onAddButtonClick = () => {
+  const handleAddButtonClick = () => {
     if (inputValue.length >= minInputLength) {
       props.addCard(inputValue, textareaValue);
       history.push('/');
     }
   };
 
-  const onUpdateButtonClick = () => {
+  const handleUpdateButtonClick = () => {
     if (inputValue.length >= minInputLength) {
       props.updateCard(urlId, inputValue, textareaValue);
       history.push('/');
     }
   };
 
-  const onDeleteButtonClick = () => {
+  const handleDeleteButtonClick = () => {
     props.removeCard(urlId);
     history.push('/');
   };
@@ -50,10 +50,9 @@ const CardForm = (props) => {
         <input
           className={styles.formInput}
           value={inputValue}
-          onChange={(event) => onChange(event)}
+          onChange={(event) => handleChange(event)}
           minLength="4"
           maxLength="255"
-          type="text"
           placeholder="Enter title"
           name="title"
           required
@@ -61,7 +60,7 @@ const CardForm = (props) => {
         <textarea
           className={styles.formSelect}
           value={textareaValue}
-          onChange={(event) => onChange(event)}
+          onChange={(event) => handleChange(event)}
           cols="30"
           rows="10"
         />
@@ -69,7 +68,7 @@ const CardForm = (props) => {
         {props.type === 'new' ? (
           <div className={styles.formBtnWrapper}>
             <Button
-              onClick={onAddButtonClick}
+              onClick={handleAddButtonClick}
               type="default"
               title="Save"
             />
@@ -77,12 +76,12 @@ const CardForm = (props) => {
         ) : (
           <div className={`${styles.formBtnWrapper} ${styles['formBtnWrapper--edit']}`}>
             <Button
-              onClick={onUpdateButtonClick}
+              onClick={handleUpdateButtonClick}
               type="default"
               title="Save"
             />
             <Button
-              onClick={onDeleteButtonClick}
+              onClick={handleDeleteButtonClick}
               type="delete"
               title="Delete"
             />

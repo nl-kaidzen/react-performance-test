@@ -6,11 +6,11 @@ import PropTypes from 'prop-types';
 
 const Card = (props) => {
   const history = useHistory('/');
-  const onEditCardClick = () => {
+  const handleEditCardClick = () => {
     history.push(`/info/${cardInfo.id}`);
   };
 
-  const onFavoriteCardClick = () => {
+  const handleFavoriteCardClick = () => {
     props.toggleCardFavoriteStatus(cardInfo.id);
   };
   const cardInfo = {...props.cardInfo};
@@ -20,11 +20,11 @@ const Card = (props) => {
       <p className={styles.cardText}>{cardInfo.text}</p>
       <div className={styles.cardButtonWrapper}>
         <IconButton
-          onClick={onEditCardClick}
+          onClick={handleEditCardClick}
           type="edit"
         />
         <IconButton
-          onClick={onFavoriteCardClick}
+          onClick={handleFavoriteCardClick}
           type={cardInfo.isFavorite ? 'dislike' : 'like'}
         />
       </div>
