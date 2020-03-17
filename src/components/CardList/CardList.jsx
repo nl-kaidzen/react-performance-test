@@ -9,7 +9,7 @@ const CardList = (props) => {
   const cards = props.cards.map((card) => (
     <Card
       cardInfo={card}
-      onFavoriteClick={props.onFavoriteClick}
+      toggleCardFavoriteStatus={props.toggleCardFavoriteStatus}
       key={card.id}
     />
   ));
@@ -28,5 +28,5 @@ export default CardList;
 
 CardList.propTypes ={
   cards: PropTypes.arrayOf(PropTypes.object),
-  onFavoriteClick: PropTypes.func,
+  toggleCardFavoriteStatus: PropTypes.func,
 }

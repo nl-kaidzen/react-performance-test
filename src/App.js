@@ -41,7 +41,7 @@ const App = () => {
     setCards([...newCardsArray]);
   };
 
-  const toggleFavorite = (id) => {
+  const toggleCardFavoriteStatus = (id) => {
     const cardIndex = cards.indexOf(cards.find((card) => card.id === id));
     const newCardsArray = [...cards];
     newCardsArray[cardIndex].isFavorite = !newCardsArray[cardIndex].isFavorite;
@@ -58,7 +58,7 @@ const App = () => {
             <CardList
               {...props}
               cards={cards}
-              onFavoriteClick={toggleFavorite}
+              toggleCardFavoriteStatus={toggleCardFavoriteStatus}
             />
           )}
         />
@@ -69,8 +69,8 @@ const App = () => {
               {...props}
               type="info"
               cards={cards}
-              onUpdateCard={updateCard}
-              onRemoveCard={removeCard}
+              updateCard={updateCard}
+              removeCard={removeCard}
             />
           )}
         />
@@ -80,7 +80,7 @@ const App = () => {
             <CardForm
               {...props}
               type="new"
-              onAddCard={addCard}
+              addCard={addCard}
             />
           )}
         />

@@ -27,20 +27,20 @@ const CardForm = (props) => {
 
   const onAddButtonClick = () => {
     if (inputValue.length >= minInputLength) {
-      props.onAddCard(inputValue, textareaValue);
+      props.addCard(inputValue, textareaValue);
       history.push('/');
     }
   };
 
   const onUpdateButtonClick = () => {
     if (inputValue.length >= minInputLength) {
-      props.onUpdateCard(urlId, inputValue, textareaValue);
+      props.updateCard(urlId, inputValue, textareaValue);
       history.push('/');
     }
   };
 
   const onDeleteButtonClick = () => {
-    props.onRemoveCard(urlId);
+    props.removeCard(urlId);
     history.push('/');
   };
   return (
@@ -62,8 +62,6 @@ const CardForm = (props) => {
           className={styles.formSelect}
           value={textareaValue}
           onChange={(event) => onChange(event)}
-          name=""
-          id=""
           cols="30"
           rows="10"
         />
@@ -100,7 +98,7 @@ export default CardForm;
 CardForm.propTypes = {
   type: PropTypes.oneOf(['new', 'info']),
   cards: PropTypes.arrayOf(PropTypes.object),
-  onAddCard: PropTypes.func,
-  onUpdateCard: PropTypes.func,
-  onRemoveCard: PropTypes.func,
+  addCard: PropTypes.func,
+  updateCard: PropTypes.func,
+  removeCard: PropTypes.func,
 }

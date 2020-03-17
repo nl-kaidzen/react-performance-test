@@ -11,7 +11,7 @@ const Card = (props) => {
   };
 
   const onFavoriteCardClick = () => {
-    props.onFavoriteClick(cardInfo.id);
+    props.toggleCardFavoriteStatus(cardInfo.id);
   };
   const cardInfo = {...props.cardInfo};
   return (
@@ -36,5 +36,5 @@ export default Card;
 
 Card.propTypes = {
   cardInfo: PropTypes.object,
-  onFavoriteClick: PropTypes.func,
+  toggleCardFavoriteStatus: PropTypes.func,
 }
