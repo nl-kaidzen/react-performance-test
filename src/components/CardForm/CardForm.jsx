@@ -12,11 +12,7 @@ const CardForm = (props) => {
   const history = useHistory('/');
   const { id } = useParams();
   const urlId = parseInt(id);
-  const minInputLength = 4;
-  let editedCard = null;
-  if (props.type === 'info') {
-    editedCard = props.cards.find((card) => card.id === urlId);
-  }
+  const editedCard = (props.type === 'info') ? props.cards.find((card) => card.id === urlId) : null;
   const [inputValue, setInputValue] = useState(editedCard ? editedCard.title : '');
   const [textareaValue, setTextareaValue] = useState(editedCard ? editedCard.text : '');
 
@@ -35,14 +31,14 @@ const CardForm = (props) => {
   }
 
   const handleAddButtonClick = () => {
-    if (inputValue.length >= minInputLength) {
+    if (inputValue.length >= titleValidateSettings.minLength) {
       props.addCard(inputValue, textareaValue);
       history.push('/');
     }
   };
 
   const handleUpdateButtonClick = () => {
-    if (inputValue.length >= minInputLength) {
+    if (inputValue.length >= titleValidateSettings.minLength) {
       props.updateCard(urlId, inputValue, textareaValue);
       history.push('/');
     }
@@ -52,8 +48,6 @@ const CardForm = (props) => {
     props.removeCard(urlId);
     history.push('/');
   };
-
-  
 
   return (
     <>
