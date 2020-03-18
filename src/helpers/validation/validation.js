@@ -1,6 +1,6 @@
 const validateValue = (value, validateSettings) => {
     const validateKeys = Object.keys(validateSettings);
-    let isValid = true;
+    let isValid = false;
     let errorMessage = '';
     let req = false;
     let minL = false;
@@ -8,17 +8,17 @@ const validateValue = (value, validateSettings) => {
     validateKeys.forEach((key) => {
       switch (key) {
         case 'required': {
-          req = value.trim() !== '' && isValid ? true : false;
+          req = value.trim() !== '' ? true : false;
           !req ? errorMessage = 'Please fill this field.' : errorMessage;
           return req;
         }
         case 'minLength': {
-          minL = (value.length >= validateSettings[key] && isValid) ? true : false;
+          minL = (value.length >= validateSettings[key]) ? true : false;
           !minL ? errorMessage = `Length of value should be longer than ${validateSettings[key]} symbols.` : errorMessage;
           return minL;
         }
         case 'maxLength': {
-          maxL = (value.length <= validateSettings[key] && isValid)  ? true : false;
+          maxL = (value.length <= validateSettings[key])  ? true : false;
           !maxL ? errorMessage = `Length of value should be shorter than ${validateSettings[key]} symbols.` : errorMessage;
           return maxL;
         }
