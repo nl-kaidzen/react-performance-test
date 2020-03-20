@@ -1,52 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import CardList from './components/CardList/CardList';
 import CardForm from './components/CardForm/CardForm';
+import { getCardsFromStorage, setCardsToStorage } from './helpers/storage/storage';
 
 const App = () => {
   const [cards, setCards] = useState(
-    JSON.parse(localStorage.getItem('cards')) || [],
+    getCardsFromStorage() || {},
   );
 
   useEffect(() => {
-    localStorage.setItem('cards', JSON.stringify(cards));
+    setCardsToStorage(cards);
   }, [cards]);
 
-  const addCard = (title, text) => {
-    const id = Date.now();
-    const createdCard = {
-      id,
-      title,
-      text,
-      isFavorite: false,
-    };
+  const addCard = useCallback(
+    (title, text) => {
+      const id = (Date.now() + Math.random() * (10 ** 8)).toString(36);
+      const createdCard = {
+        id,
+        title,
+        text,
+        isFavorite: false,
+      };
 
-    setCards([...cards, createdCard]);
-  };
+      setCards({...cards, [id]: createdCard});
+    }, [cards]
+  );
 
-  const removeCard = (id) => {
-    const newCardsArray = cards.filter((card) => card.id !== id);
-    setCards([...newCardsArray]);
-  };
+  const removeCard = useCallback(
+    (id) => {
+      const newCardsList = {...cards};
+      delete newCardsList[id]
+      setCards(newCardsList);
+    }, [cards]
+  );
 
-  const updateCard = (id, title, text) => {
-    const updatedCardElement = cards.find((card) => card.id === id);
-    const newCardsArray = [...cards];
-    const updatedCardIndex = newCardsArray.indexOf(updatedCardElement);
-    const newCardElement = { ...updatedCardElement };
-    newCardElement.title = title;
-    newCardElement.text = text;
-    newCardsArray[updatedCardIndex] = { ...newCardElement };
-    setCards([...newCardsArray]);
-  };
+  const updateCard = useCallback(
+    ({id, title, text}) => {
+      const newCardsList = {...cards};
+      const updatedCardElement = newCardsList[id];
+      updatedCardElement.title = title;
+      updatedCardElement.text = text;
+      setCards(newCardsList);
+    }, [cards]
+  );
 
-  const toggleCardFavoriteStatus = (id) => {
-    const cardIndex = cards.indexOf(cards.find((card) => card.id === id));
-    const newCardsArray = [...cards];
-    newCardsArray[cardIndex].isFavorite = !newCardsArray[cardIndex].isFavorite;
-    setCards([...newCardsArray]);
-  };
+  const toggleCardFavoriteStatus = useCallback(
+    (id) => {
+      const newCardsList = {...cards};
+      const updatedCardElement = newCardsList[id];
+      updatedCardElement.isFavorite = !updatedCardElement.isFavorite;
+      setCards(newCardsList);
+    }, [cards]
+  );
 
   return (
     <main>

@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import HeaderTitle from '../common/HeaderTitle/HeaderTitle';
@@ -11,8 +10,7 @@ import validateValue from './../../helpers/validation/validation';
 const CardForm = (props) => {
   const history = useHistory('/');
   const { id } = useParams();
-  const urlId = parseInt(id);
-  const editedCard = (props.type === 'info') ? props.cards.find((card) => card.id === urlId) : null;
+  const editedCard = (props.type === 'info') ? props.cards[id] : null;
   const [inputValue, setInputValue] = useState(editedCard ? editedCard.title : '');
   const [textareaValue, setTextareaValue] = useState(editedCard ? editedCard.text : '');
 
@@ -39,13 +37,13 @@ const CardForm = (props) => {
 
   const handleUpdateButtonClick = () => {
     if (inputValue.length >= titleValidateSettings.minLength) {
-      props.updateCard(urlId, inputValue, textareaValue);
+      props.updateCard({id, title: inputValue, text: textareaValue});
       history.push('/');
     }
   };
 
   const handleDeleteButtonClick = () => {
-    props.removeCard(urlId);
+    props.removeCard(id);
     history.push('/');
   };
 
@@ -101,7 +99,7 @@ export default CardForm;
 
 CardForm.propTypes = {
   type: PropTypes.oneOf(['new', 'info']),
-  cards: PropTypes.arrayOf(PropTypes.object),
+  cards: PropTypes.objectOf(PropTypes.object),
   addCard: PropTypes.func,
   updateCard: PropTypes.func,
   removeCard: PropTypes.func,

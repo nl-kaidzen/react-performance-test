@@ -6,13 +6,13 @@ import styles from './CardList.module.scss';
 import PropTypes from 'prop-types';
 
 const CardList = (props) => {
-  const cards = props.cards.map((card) => (
-    <Card
+  const cards = (Object.entries(props.cards).map(([key, card]) => (
+    <Card 
       cardInfo={card}
       toggleCardFavoriteStatus={props.toggleCardFavoriteStatus}
-      key={card.id}
+      key={key}
     />
-  ));
+  )));
   return (
     <>
       <HeaderTitle title="Card List" />
@@ -27,6 +27,6 @@ const CardList = (props) => {
 export default CardList;
 
 CardList.propTypes ={
-  cards: PropTypes.arrayOf(PropTypes.object),
+  cards: PropTypes.objectOf(PropTypes.object),
   toggleCardFavoriteStatus: PropTypes.func,
 }
