@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useCallback } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import CardList from './components/CardList/CardList';
 import CardForm from './components/CardForm/CardForm';
 import { getCardsFromStorage, setCardsToStorage } from './helpers/storage/storage';
+import { getUUID } from './helpers/common/common';
 
 const App = () => {
   const [cards, setCards] = useState(
@@ -16,7 +18,7 @@ const App = () => {
 
   const addCard = useCallback(
     (title, text) => {
-      const id = (Date.now() + Math.random() * (10 ** 8)).toString(36);
+      const id = getUUID();
       const createdCard = {
         id,
         title,
@@ -30,8 +32,7 @@ const App = () => {
 
   const removeCard = useCallback(
     (id) => {
-      const newCardsList = {...cards};
-      delete newCardsList[id]
+      const { [id]: deleted, ...newCardsList} = cards;
       setCards(newCardsList);
     }, [cards]
   );
