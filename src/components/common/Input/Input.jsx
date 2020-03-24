@@ -20,12 +20,12 @@ const Input = (props) => {
 }
 
 Input.propTypes = {
-  value: PropTypes.string,
+  value: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  isValid: PropTypes.bool,
-  name: PropTypes.string,
+  isValid: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired,
   errorMessage: PropTypes.string,
-  handleChange: PropTypes.func,
+  handleChange: PropTypes.func.isRequired,
 }
 
 export default React.memo(Input);

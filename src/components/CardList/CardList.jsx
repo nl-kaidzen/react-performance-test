@@ -39,8 +39,8 @@ const CardList = (props) => {
 };
 
 CardList.propTypes ={
-  cards: PropTypes.objectOf(PropTypes.object),
-  toggleCardFavoriteStatus: PropTypes.func,
+  cards: PropTypes.objectOf(PropTypes.object).isRequired,
+  toggleCardFavoriteStatus: PropTypes.func.isRequired,
 }
 
 export default React.memo(CardList);

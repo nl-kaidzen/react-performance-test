@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Input from '../common/Input/Input';
 import styles from './CardForm.module.scss';
 import validateValue from './../../helpers/validation/validation';
-import { NEW_TYPE, INFO_TYPE } from './../../constants/storage';
+import { NEW_TYPE, INFO_TYPE, BUTTON_TYPES_MAP } from './../../constants/storage';
 import { TITLE_VALIDATION_SETTINGS } from './../../helpers/validation/validationSettings';
 
 const CardForm = (props) => {
@@ -71,7 +71,7 @@ const CardForm = (props) => {
           <div className={styles.formBtnWrapper}>
             <Button
               onClick={handleAddButtonClick}
-              type="default"
+              type={BUTTON_TYPES_MAP.default}
               title="Save"
             />
           </div>
@@ -79,12 +79,12 @@ const CardForm = (props) => {
           <div className={`${styles.formBtnWrapper} ${styles['formBtnWrapper--edit']}`}>
             <Button
               onClick={handleUpdateButtonClick}
-              type="default"
+              type={BUTTON_TYPES_MAP.default}
               title="Save"
             />
             <Button
               onClick={handleDeleteButtonClick}
-              type="delete"
+              type={BUTTON_TYPES_MAP.delete}
               title="Delete"
             />
           </div>
@@ -95,8 +95,8 @@ const CardForm = (props) => {
 };
 
 CardForm.propTypes = {
-  type: PropTypes.oneOf([NEW_TYPE, INFO_TYPE]),
-  cards: PropTypes.objectOf(PropTypes.object),
+  type: PropTypes.oneOf([NEW_TYPE, INFO_TYPE]).isRequired,
+  cards: PropTypes.objectOf(PropTypes.object).isRequired,
   addCard: PropTypes.func,
   updateCard: PropTypes.func,
   removeCard: PropTypes.func,
