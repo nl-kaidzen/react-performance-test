@@ -16,7 +16,7 @@ const App = () => {
   const { addCard, updateCard, removeCard, toggleFavoriteStatus } = cardsAPI;
 
   useEffect(() => {
-    setCardsToStorage(cards);
+    return setCardsToStorage(cards);
   }, [cards]);
 
   return (
