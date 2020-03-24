@@ -6,13 +6,13 @@ import PropTypes from 'prop-types';
 import Input from '../common/Input/Input';
 import styles from './CardForm.module.scss';
 import validateValue from './../../helpers/validation/validation';
-import { NEW_TYPE, INFO_TYPE, BUTTON_TYPES_MAP } from './../../constants/storage';
+import { CARD_TYPE_MAP, BUTTON_TYPES_MAP } from './../../constants/storage';
 import { TITLE_VALIDATION_SETTINGS } from './../../helpers/validation/validationSettings';
 
 const CardForm = (props) => {
   const history = useHistory('/');
   const { id } = useParams();
-  const isNew = props.type === NEW_TYPE;
+  const isNew = props.type === CARD_TYPE_MAP.new;
   const editedCard = isNew ? null : props.cards[id];
   const initialFieldsValue = {
     title: isNew ? '' : editedCard.title,
@@ -95,7 +95,7 @@ const CardForm = (props) => {
 };
 
 CardForm.propTypes = {
-  type: PropTypes.oneOf([NEW_TYPE, INFO_TYPE]).isRequired,
+  type: PropTypes.oneOf([CARD_TYPE_MAP.new, CARD_TYPE_MAP.info]).isRequired,
   cards: PropTypes.objectOf(PropTypes.object).isRequired,
   addCard: PropTypes.func,
   updateCard: PropTypes.func,

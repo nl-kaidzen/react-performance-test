@@ -6,6 +6,7 @@ import CardList from './components/CardList/CardList';
 import CardForm from './components/CardForm/CardForm';
 import { getCardsFromStorage, setCardsToStorage } from './helpers/storage/storage';
 import { useCards } from './helpers/useCards/useCards';
+import { CARD_TYPE_MAP } from './constants/storage'
 
 const App = () => {
   const [cards, cardsAPI] = useCards(
@@ -37,7 +38,7 @@ const App = () => {
           render={(props) => (
             <CardForm
               {...props}
-              type="info"
+              type={CARD_TYPE_MAP.info}
               cards={cards}
               updateCard={updateCard}
               removeCard={removeCard}
@@ -49,7 +50,7 @@ const App = () => {
           render={(props) => (
             <CardForm
               {...props}
-              type="new"
+              type={CARD_TYPE_MAP.new}
               addCard={addCard}
             />
           )}

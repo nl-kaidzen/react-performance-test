@@ -2,6 +2,13 @@ export const CARD_STORAGE_KEY = 'cards';
 
 export const NEW_TYPE = 'new';
 export const INFO_TYPE = 'info';
+/**
+ * Types for CardForm 
+ */
+export const CARD_TYPE_MAP = {
+  new: 'new',
+  info: 'info',
+}
 
 /**
  * Constant TYPES for IconButton
