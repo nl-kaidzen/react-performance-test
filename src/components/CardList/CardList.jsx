@@ -10,8 +10,10 @@ const CardList = (props) => {
   const history = useHistory('/');
   const cards = (Object.entries(props.cards).map(([key, card]) => (
     <Card 
-      cardInfo={card}
-      toggleCardFavoriteStatus={props.toggleCardFavoriteStatus}
+      title={card.title}
+      text={card.text}
+      id={card.id}
+      isFavorite={card.isFavorite}
       key={key}
     />
   )));

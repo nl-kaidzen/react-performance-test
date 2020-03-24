@@ -46,6 +46,6 @@ export function useCards(cards) {
   );
 
   const api = {addCard, updateCard, removeCard, toggleFavoriteStatus};
-  
+
   return [cardsState, api];
 }

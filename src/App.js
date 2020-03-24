@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
