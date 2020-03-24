@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Card.module.scss';
 import IconButton from '../common/IconButton/IconButton';
-import { ICON_TYPES_MAP } from './../../constants/storage'
+import { ICON_TYPES_MAP } from 'constants/storage'
 import PropTypes from 'prop-types';
 
 const Card = ({ title, text, id, isFavorite }) => {

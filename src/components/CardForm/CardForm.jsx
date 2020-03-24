@@ -5,9 +5,9 @@ import Button from '../common/Button/Button';
 import PropTypes from 'prop-types';
 import Input from '../common/Input/Input';
 import styles from './CardForm.module.scss';
-import validateValue from './../../helpers/validation/validation';
-import { CARD_TYPE_MAP, BUTTON_TYPES_MAP } from './../../constants/storage';
-import { TITLE_VALIDATION_SETTINGS } from './../../helpers/validation/validationSettings';
+import validateValue from 'helpers/validation/validation';
+import { CARD_TYPE_MAP, BUTTON_TYPES_MAP } from 'constants/storage';
+import { TITLE_VALIDATION_SETTINGS } from 'helpers/validation/validationSettings';
 
 const CardForm = (props) => {
   const history = useHistory('/');

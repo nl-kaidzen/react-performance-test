@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Button.module.scss';
 import PropTypes from 'prop-types';
-import { BUTTON_TYPES_MAP } from './../../../constants/storage';
+import { BUTTON_TYPES_MAP } from 'constants/storage';
 
 const TYPE_TO_CLASSNAMES_MAP = {
   default: `${styles.formButton}`,

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './IconButton.module.scss';
 import PropTypes from 'prop-types';
-import { ICON_TYPES_MAP } from './../../../constants/storage'
+import { ICON_TYPES_MAP } from 'constants/storage'
 
 const TYPE_TO_SVG_MAP = {
   [ICON_TYPES_MAP.edit]: (<svg height="30px" viewBox="0 -1 401.52289 401" width="30px" xmlns="http://www.w3.org/2000/svg">

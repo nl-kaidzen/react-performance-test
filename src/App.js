@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
-import CardList from './components/CardList/CardList';
-import CardForm from './components/CardForm/CardForm';
-import { getCardsFromStorage, setCardsToStorage } from './helpers/storage/storage';
-import { useCards } from './helpers/useCards/useCards';
-import { CARD_TYPE_MAP } from './constants/storage'
+import CardList from 'components/CardList/CardList';
+import CardForm from 'components/CardForm/CardForm';
+import { getCardsFromStorage, setCardsToStorage } from 'helpers/storage/storage';
+import { useCards } from 'helpers/useCards/useCards';
+import { CARD_TYPE_MAP } from 'constants/storage'
 
 const App = () => {
   const [cards, cardsAPI] = useCards(
