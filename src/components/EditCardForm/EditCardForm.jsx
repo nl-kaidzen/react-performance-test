@@ -5,11 +5,12 @@ import CardForm from 'components/CardForm/CardForm';
 import Button from 'components/common/Button/Button';
 import styles from './EditCardForm.module.scss';
 import { BUTTON_TYPES_MAP } from 'constants/storage';
+import { homeRoute } from 'constants/routes';
 import { TITLE_VALIDATION_SETTINGS } from 'helpers/validation/validationSettings';
 import PropTypes from 'prop-types';
 
 const EditCardForm = (props) => {
-  const history = useHistory('/');
+  const history = useHistory(homeRoute);
   const { id } = useParams();
   const editedCard = props.cards[id];
 
@@ -30,13 +31,13 @@ const EditCardForm = (props) => {
   const handleUpdateButtonClick = () => {
     if (fields.title.length >= TITLE_VALIDATION_SETTINGS.minLength) {
       props.updateCard({ id, title: fields.title, text: fields.text });
-      history.push('/');
+      history.push(homeRoute);
     }
   };
 
   const handleDeleteButtonClick = () => {
     props.removeCard(id);
-    history.push('/');
+    history.push(homeRoute);
   }
 
   return (
@@ -51,7 +52,7 @@ const EditCardForm = (props) => {
           <Button
             onClick={handleUpdateButtonClick}
             type={BUTTON_TYPES_MAP.default}
-            title="Save"
+            title="Update"
           />
           <Button
             onClick={handleDeleteButtonClick}

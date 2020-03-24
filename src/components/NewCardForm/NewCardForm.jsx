@@ -5,11 +5,12 @@ import CardForm from 'components/CardForm/CardForm';
 import Button from 'components/common/Button/Button';
 import styles from './NewCardForm.module.scss';
 import { BUTTON_TYPES_MAP } from 'constants/storage';
+import { homeRoute } from 'constants/routes';
 import { TITLE_VALIDATION_SETTINGS } from 'helpers/validation/validationSettings';
 import PropTypes from 'prop-types';
 
 const NewCardForm = (props) => {
-  const history = useHistory('/');
+  const history = useHistory(homeRoute);
 
   const initialFieldsValue = {
     title: '',
@@ -28,7 +29,7 @@ const NewCardForm = (props) => {
   const handleAddButtonClick = () => {
     if (fields.title.length >= TITLE_VALIDATION_SETTINGS.minLength) {
       props.addCard(fields.title, fields.text);
-      history.push('/');
+      history.push(homeRoute);
     }
   };
 

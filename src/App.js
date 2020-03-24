@@ -4,6 +4,7 @@ import './App.css';
 import CardList from 'components/CardList/CardList';
 import { getCardsFromStorage, setCardsToStorage } from 'helpers/storage/storage';
 import { useCards } from 'helpers/useCards/useCards';
+import { homeRoute, editCardRoute, createCardRoute } from 'constants/routes';
 import NewCardForm from 'components/NewCardForm/NewCardForm';
 import EditCardForm from 'components/EditCardForm/EditCardForm';
 
@@ -12,7 +13,7 @@ const App = () => {
     getCardsFromStorage() || {},
   );
 
-  const {addCard, updateCard, removeCard, toggleFavoriteStatus} = cardsAPI;
+  const { addCard, updateCard, removeCard, toggleFavoriteStatus } = cardsAPI;
 
   useEffect(() => {
     setCardsToStorage(cards);
@@ -23,7 +24,7 @@ const App = () => {
       <Switch>
         <Route
           exact
-          path="/"
+          path={homeRoute}
           render={(props) => (
             <CardList
               {...props}
@@ -33,7 +34,7 @@ const App = () => {
           )}
         />
         <Route
-          path="/info/:id?"
+          path={editCardRoute}
           render={(props) => (
             <EditCardForm
               {...props}
@@ -44,7 +45,7 @@ const App = () => {
           )}
         />
         <Route
-          path="/create"
+          path={createCardRoute}
           render={(props) => (
             <NewCardForm
               {...props}
