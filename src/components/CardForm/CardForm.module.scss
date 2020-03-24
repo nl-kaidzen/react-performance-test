@@ -3,15 +3,7 @@
 }
 
 .form {
-  align-items: center;
-  background-color: rgb(236, 236, 236);
-  display: flex;
-  flex-direction: column;
-  height: auto;
-  justify-content: flex-start;
-  margin: auto;
-  padding: 30px;
-  width: 400px;
+  width: 100%;
 }
 
 .formSelect {
@@ -25,6 +17,7 @@
 
 .formSelect {
   padding: 10px;
+  resize: none;
 }
 
 .formBtnWrapper {

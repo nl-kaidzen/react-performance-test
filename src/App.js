@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import CardList from 'components/CardList/CardList';
-import CardForm from 'components/CardForm/CardForm';
 import { getCardsFromStorage, setCardsToStorage } from 'helpers/storage/storage';
 import { useCards } from 'helpers/useCards/useCards';
-import { CARD_TYPE_MAP } from 'constants/storage'
+import NewCardForm from 'components/NewCardForm/NewCardForm';
+import EditCardForm from 'components/EditCardForm/EditCardForm';
 
 const App = () => {
   const [cards, cardsAPI] = useCards(
@@ -35,9 +35,8 @@ const App = () => {
         <Route
           path="/info/:id?"
           render={(props) => (
-            <CardForm
+            <EditCardForm
               {...props}
-              type={CARD_TYPE_MAP.info}
               cards={cards}
               updateCard={updateCard}
               removeCard={removeCard}
@@ -47,9 +46,8 @@ const App = () => {
         <Route
           path="/create"
           render={(props) => (
-            <CardForm
+            <NewCardForm
               {...props}
-              type={CARD_TYPE_MAP.new}
               addCard={addCard}
             />
           )}
