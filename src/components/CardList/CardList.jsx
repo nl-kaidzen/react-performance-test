@@ -31,7 +31,7 @@ const CardList = (props) => {
       <ul 
         className={styles.list}
         onClick={handleClick}>
-        <AddCardButton key={1} />
+        <AddCardButton />
         {cards}
       </ul>
     </>
