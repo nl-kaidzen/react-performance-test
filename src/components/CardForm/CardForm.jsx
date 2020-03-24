@@ -6,38 +6,38 @@ import PropTypes from 'prop-types';
 import Input from '../common/Input/Input';
 import styles from './CardForm.module.scss';
 import validateValue from './../../helpers/validation/validation';
+import { NEW_TYPE, INFO_TYPE } from './../../constants/storage';
+import { TITLE_VALIDATION_SETTINGS } from './../../helpers/validation/validationSettings';
 
 const CardForm = (props) => {
   const history = useHistory('/');
   const { id } = useParams();
-  const editedCard = (props.type === 'info') ? props.cards[id] : null;
-  const [inputValue, setInputValue] = useState(editedCard ? editedCard.title : '');
-  const [textareaValue, setTextareaValue] = useState(editedCard ? editedCard.text : '');
+  const isNew = props.type === NEW_TYPE;
+  const editedCard = isNew ? null : props.cards[id];
+  const initialFieldsValue = {
+    title: isNew ? '' : editedCard.title,
+    text: isNew ? '' : editedCard.text,
+  };
+  const [fields, setFields] = useState(initialFieldsValue);
 
   const handleChange = (event) => {
-    const { target } = event;
-    const { value } = target;
-    target.name === 'title'
-      ? setInputValue(value)
-      : setTextareaValue(value);
+    const target = event.target;
+    setFields({
+      ...fields,
+      [target.name]: target.value,
+    });
   };
 
-  const titleValidateSettings = {
-    required: true,
-    minLength: 4,
-    maxLength: 30,
-  }
-
   const handleAddButtonClick = () => {
-    if (inputValue.length >= titleValidateSettings.minLength) {
-      props.addCard(inputValue, textareaValue);
+    if (fields.title.length >= TITLE_VALIDATION_SETTINGS.minLength) {
+      props.addCard(fields.title, fields.text);
       history.push('/');
     }
   };
 
   const handleUpdateButtonClick = () => {
-    if (inputValue.length >= titleValidateSettings.minLength) {
-      props.updateCard({id, title: inputValue, text: textareaValue});
+    if (fields.title.length >= TITLE_VALIDATION_SETTINGS.minLength) {
+      props.updateCard({id, title: fields.title, text: fields.text});
       history.push('/');
     }
   };
@@ -49,26 +49,25 @@ const CardForm = (props) => {
 
   return (
     <>
-      <HeaderTitle title={props.type === 'new' ? 'New card' : 'Card info'} />
+      <HeaderTitle title={isNew ? 'New card' : 'Card info'} />
       <form className={styles.form} action="">
         <Input 
-          value={inputValue}
+          value={fields.title}
           handleChange={(event) => handleChange(event)}
           placeholder="Enter title"
-          errorMessage={validateValue(inputValue, titleValidateSettings).errorMessage}
-          isValid={validateValue(inputValue, titleValidateSettings).isValid}
+          errorMessage={validateValue(fields.title, TITLE_VALIDATION_SETTINGS).errorMessage}
+          isValid={validateValue(fields.title, TITLE_VALIDATION_SETTINGS).isValid}
           name="title"
         />
-
         <textarea
           className={styles.formSelect}
-          value={textareaValue}
+          value={fields.text}
           onChange={(event) => handleChange(event)}
           cols="30"
           rows="10"
+          name="text"
         />
-
-        {props.type === 'new' ? (
+        {isNew ? (
           <div className={styles.formBtnWrapper}>
             <Button
               onClick={handleAddButtonClick}
@@ -95,12 +94,11 @@ const CardForm = (props) => {
   );
 };
 
-export default CardForm;
-
 CardForm.propTypes = {
-  type: PropTypes.oneOf(['new', 'info']),
+  type: PropTypes.oneOf([NEW_TYPE, INFO_TYPE]),
   cards: PropTypes.objectOf(PropTypes.object),
   addCard: PropTypes.func,
   updateCard: PropTypes.func,
   removeCard: PropTypes.func,
 }
+export default React.memo(CardForm);

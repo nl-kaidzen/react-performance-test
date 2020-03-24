@@ -19,8 +19,6 @@ const Input = (props) => {
   );
 }
 
-export default Input;
-
 Input.propTypes = {
   value: PropTypes.string,
   placeholder: PropTypes.string,
@@ -29,3 +27,5 @@ Input.propTypes = {
   errorMessage: PropTypes.string,
   handleChange: PropTypes.func,
 }
+
+export default React.memo(Input);

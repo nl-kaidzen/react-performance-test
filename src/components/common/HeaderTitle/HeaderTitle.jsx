@@ -7,8 +7,8 @@ const HeaderTitle = (props) => (
   <h1 className={styles.title}>{props.title}</h1>
 );
 
-export default HeaderTitle;
-
 HeaderTitle.propTypes = {
   title: PropTypes.string,
 }
+
+export default React.memo(HeaderTitle);

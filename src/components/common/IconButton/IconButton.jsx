@@ -20,14 +20,17 @@ const IconButton = (props) => (
     onClick={props.onClick}
     className={styles.iconButton}
     type="button"
+    data-id={props.dataId}
+    data-action={props.type}
   >
     {TYPE_TO_SVG_MAP[props.type]}
   </button>
 );
 
-export default IconButton;
-
 IconButton.propTypes = {
   onClick: PropTypes.func,
-  type: PropTypes.oneOf(['edit', 'like', 'dislike'])
+  type: PropTypes.oneOf(['edit', 'like', 'dislike']),
+  dataId: PropTypes.string,
 }
+
+export default React.memo(IconButton);

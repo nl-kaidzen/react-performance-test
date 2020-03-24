@@ -13,10 +13,22 @@ const CardList = (props) => {
       key={key}
     />
   )));
+  const handleClick = (event) => {
+    const target = event.target.closest('button');
+    if (target) {
+      switch (target.dataset.action) {
+        case 'edit': return console.log('Catch edit');
+        case 'like': return console.log('Catch like');
+        case 'dislike': return console.log('Catch dislike')
+      }
+    }
+  }
   return (
     <>
       <HeaderTitle title="Card List" />
-      <ul className={styles.list}>
+      <ul 
+        className={styles.list}
+        onClick={handleClick}>
         <AddCardButton key={1} />
         {cards}
       </ul>
@@ -24,9 +36,9 @@ const CardList = (props) => {
   );
 };
 
-export default CardList;
-
 CardList.propTypes ={
   cards: PropTypes.objectOf(PropTypes.object),
   toggleCardFavoriteStatus: PropTypes.func,
 }
+
+export default React.memo(CardList);

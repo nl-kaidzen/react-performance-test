@@ -10,4 +10,4 @@ const AddCardButton = () => (
   </li>
 );
 
-export default AddCardButton;
+export default React.memo(AddCardButton);

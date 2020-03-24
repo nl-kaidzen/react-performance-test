@@ -17,10 +17,10 @@ const Button = (props) => (
   </button>
 );
 
-export default Button;
-
 Button.propTypes ={ 
   onClick: PropTypes.func,
   type: PropTypes.oneOf(['default', 'delete']),
   title: PropTypes.string,
 }
+
+export default React.memo(Button);
