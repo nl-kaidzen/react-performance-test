@@ -1,20 +1,22 @@
 import React from 'react';
+import ErrorLabel from 'components/common/ErrorLabel'
 import PropTypes from 'prop-types';
 import styles from './Input.module.scss'
 
-const Input = (props) => {
+const Input = ({ value, placeholder, name, errorMessage, handleChange, handleBlur }) => {
   return (
     <>
       <input 
+        value={value}
+        placeholder={placeholder}
+        name={name}
+        onChange={handleChange}
+        onBlur={handleBlur}
         type="text"
-        name={props.name}
-        value={props.value}
-        placeholder={props.placeholder}
-        onChange={props.handleChange}
         className={styles.formInput}/>
-      <p
-        className={styles.formError}
-      >{!props.isValid ? props.errorMessage : ''}</p>
+      <ErrorLabel 
+        errorMessage={errorMessage}
+      />
     </>
   );
 }
@@ -22,10 +24,10 @@ const Input = (props) => {
 Input.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  isValid: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   errorMessage: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
+  handleBlur: PropTypes.func
 }
 
 export default React.memo(Input);

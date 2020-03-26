@@ -1,5 +1,5 @@
 import { useState, useCallback }from 'react';
-import { getUUID } from './../common/common'
+import { getUUID } from 'helpers/common/common';
 
 export function useCards(cards) {
   const [cardsState, setCards] = useState(cards);

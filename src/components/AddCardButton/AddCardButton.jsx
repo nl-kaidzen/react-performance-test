@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './AddCardButton.module.scss';
-import { createCardRoute } from 'constants/routes';
+import { CREATE_CARD_ROUTE } from 'constants/routes';
 
 const AddCardButton = () => (
   <li>
     <Link 
-      to={createCardRoute} 
+      to={CREATE_CARD_ROUTE} 
       className={styles.link}
       aria-label="Create new card"
     >

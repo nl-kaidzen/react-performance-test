@@ -5,12 +5,12 @@ import CardForm from 'components/CardForm/CardForm';
 import Button from 'components/common/Button/Button';
 import styles from './EditCardForm.module.scss';
 import { BUTTON_TYPES_MAP } from 'constants/storage';
-import { homeRoute } from 'constants/routes';
-import { TITLE_VALIDATION_SETTINGS } from 'helpers/validation/validationSettings';
+import { HOME_ROUTE } from 'constants/routes';
+import { useValidate } from 'helpers/validation/newValidation';
 import PropTypes from 'prop-types';
 
 const EditCardForm = (props) => {
-  const history = useHistory(homeRoute);
+  const history = useHistory(HOME_ROUTE);
   const { id } = useParams();
   const editedCard = props.cards[id];
 
@@ -29,16 +29,17 @@ const EditCardForm = (props) => {
   };
 
   const handleUpdateButtonClick = () => {
-    if (fields.title.length >= TITLE_VALIDATION_SETTINGS.minLength) {
+    if (validateForm()) {
       props.updateCard({ id, title: fields.title, text: fields.text });
-      history.push(homeRoute);
+      history.push(HOME_ROUTE);
     }
   };
 
   const handleDeleteButtonClick = () => {
     props.removeCard(id);
-    history.push(homeRoute);
+    history.push(HOME_ROUTE);
   }
+  const [isFieldValid, errorList, validateForm, validateField] = useValidate(fields);
 
   return (
     <>
@@ -46,7 +47,10 @@ const EditCardForm = (props) => {
       <div className={styles.form}>
         <CardForm
           fields={fields}
+          isFieldValid={isFieldValid}
+          errorList={errorList}
           handleChange={handleChange}
+          handleBlur={validateField}
         />
         <div className={`${styles.formBtnWrapper} ${styles['formBtnWrapper--edit']}`}>
           <Button

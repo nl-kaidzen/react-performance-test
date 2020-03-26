@@ -1,40 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Input from '../common/Input/Input';
+import Textarea from '../common/Textarea/index';
 import styles from './CardForm.module.scss';
-import validateValue from 'helpers/validation/validation';
-import { TITLE_VALIDATION_SETTINGS } from 'helpers/validation/validationSettings';
 
-const CardForm = ({fields, handleChange}) => {
-
-  return (
-    <form className={styles.form} action="">
-      <Input
-        value={fields.title}
-        handleChange={(event) => handleChange(event)}
-        placeholder="Enter title"
-        errorMessage={validateValue(fields.title, TITLE_VALIDATION_SETTINGS).errorMessage}
-        isValid={validateValue(fields.title, TITLE_VALIDATION_SETTINGS).isValid}
-        name="title"
-      />
-      <textarea
-        className={styles.formSelect}
-        value={fields.text}
-        onChange={(event) => handleChange(event)}
-        cols="30"
-        rows="10"
-        name="text"
-      />
-
-    </form>
-  );
-};
+const CardForm = ({
+  fields, handleChange, handleBlur, errorList,
+}) => (
+  <form className={styles.form}>
+    <Input
+      value={fields.title}
+      placeholder="Enter title from 4 to 12 letters"
+      name="title"
+      errorMessage={errorList.title}
+      handleChange={handleChange}
+      handleBlur={handleBlur}
+    />
+    <Textarea
+      value={fields.text}
+      placeholder="Enter text from 6 to 30 letters"
+      name="text"
+      errorMessage={errorList.text}
+      handleChange={handleChange}
+      handleBlur={handleBlur}
+    />
+  </form>
+);
 
 CardForm.propTypes = {
   fields: PropTypes.shape({
     title: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
-  }),
+  }).isRequired,
+  errorList: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
-}
+  handleBlur: PropTypes.func.isRequired,
+};
 export default React.memo(CardForm);
