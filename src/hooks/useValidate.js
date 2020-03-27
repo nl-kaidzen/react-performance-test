@@ -1,13 +1,15 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-unused-vars */
 import { useState, useCallback } from 'react';
 
 const VALIDATE_FUNCTIONS_MAP = {
-  required: (value) => value.trim() !== '' ? true : false,
-  minLength: (value, minLength) => value.length >= minLength ? true : false,
-  maxLength: (value, maxLength) => value.length <= maxLength ? true : false,
+  required: (value) => (value.trim() !== ''),
+  minLength: (value, minLength) => (value.length >= minLength),
+  maxLength: (value, maxLength) => (value.length <= maxLength),
 };
 
 const GENERATE_ERRORS_FUNCTIONS_MAP = {
-  required: () => `Please fill this field`,
+  required: () => 'Please fill this field',
   minLength: (minLength) => `Minimal field length should be more than ${minLength} symbols`,
   maxLength: (maxLength) => `Minimal field length should be more than ${maxLength} symbols`,
 };
@@ -23,12 +25,12 @@ const generateErrorMessage = (rule, fieldName, validateRules) => {
 };
 
 /**
- * 
- * 
+ *
+ *
  * @param {string} value -          current value;
  * @param {string} fieldName -      name of current validated field;
  * @param {object} validateRules -  Ex: { required: true, minLength: 6, maxLength: 12 };
- * 
+ *
  * @returns {array} -   [rule: string, isValid: boolean]
  *                      rule: name of failed rule (Ex: required, manLength, etc...);
  *                      isValid: boolean value
@@ -46,8 +48,8 @@ const validateFieldValue = (value, fieldName, validateRules) => {
     return [rule, isValid];
   });
 
-  // eslint-disable-next-line no-unused-vars
-  const firstFailedRule = validationResultArray.find(([rule, validateValue]) => validateValue === false);
+  const firstFailedRule = validationResultArray
+    .find(([rule, validateValue]) => validateValue === false);
   if (firstFailedRule === undefined) {
     isFieldValid = true;
     errorMessage = '';
@@ -57,19 +59,20 @@ const validateFieldValue = (value, fieldName, validateRules) => {
     errorMessage = generateErrorMessage(failedRule, fieldName, validateRules);
   }
 
-  return [isFieldValid, errorMessage]; 
+  return [isFieldValid, errorMessage];
 };
 
 /**
  * useValidate - Hook, which used for validating forms.
- * 
- * @param {object} fields - An object with all values of validated input fields. Ex: { title: 'Title', text: 'Text' }
+ *
+ * @param {object} fields - An object with all values of validated input fields.
+ *                          Ex: { title: 'Title', text: 'Text' }
  * @param {object} validateRules - Ex: { required: true, minLength: 6, maxLength: 12 }
- * 
+ *
  * @returns {array} - Array with values and functions. Check another comments for nasted functions
  */
 
-export function useValidate(fields, validateRules) {
+function useValidate(fields, validateRules) {
   const [isFieldValid, setFieldValid] = useState(false);
   const [errorList, setError] = useState({
     ...ERROR_LIST_INITIAL_MAP,
@@ -79,19 +82,21 @@ export function useValidate(fields, validateRules) {
 
   /**
    * validateForm - functions, which used for validate all form. Use as onSubmit - effect.
-   * 
+   *
    * @returns {boolean} - is form valid (true | false).
    */
 
   const validateForm = useCallback(() => {
     const fieldsArrayFromEntries = Object.entries(fields);
     fieldsArrayFromEntries.forEach(([fieldName, fieldValue]) => {
-      const [fieldIsValid, fieldErrorMessage] = validateFieldValue(fieldValue, fieldName, validateRules);
+      const [fieldIsValid, fieldErrorMessage] = validateFieldValue(
+        fieldValue, fieldName, validateRules,
+      );
       formValidationStatusByEachField[fieldName] = fieldIsValid;
       formErrorList[fieldName] = fieldErrorMessage;
-    }); 
-    setError(formErrorList);//TODO: Change to reduce
-    
+    });
+    setError(formErrorList);// TODO: Change to reduce
+
     const validateStatusArrayForEachField = Object.values(formValidationStatusByEachField);
     if (validateStatusArrayForEachField.indexOf(false) === -1) {
       return true;
@@ -99,21 +104,27 @@ export function useValidate(fields, validateRules) {
   }, [fields]);
 
   /**
-   * validatedField - functions, which used for validate single field. Use as onBlur or onChange - effect.
-   * 
-   * @param {object} event - native object from the browser. This object contains all information about the validated field.
+   * validatedField - functions, which used for validate single field.
+   *                  Use as onBlur or onChange - effect.
+   *
+   * @param {object} event - native object from the browser.
+   *                         This object contains all information about the validated field.
    */
 
   const validateField = useCallback((event) => {
     const currentField = event.target;
     const currentFieldValue = fields[currentField.name];
-    const [validationValue, errorMessage] = validateFieldValue(currentFieldValue, currentField.name, validateRules);
+    const [validationValue, errorMessage] = validateFieldValue(
+      currentFieldValue, currentField.name, validateRules,
+    );
     setFieldValid(validationValue);
     setError({
       ...errorList,
       [currentField.name]: errorMessage,
-    })
+    });
   }, [fields]);
 
   return [isFieldValid, errorList, validateForm, validateField];
 }
+
+export default useValidate;

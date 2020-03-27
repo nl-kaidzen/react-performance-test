@@ -1,4 +1,4 @@
-export const VALIDATE_RULES = {
+const VALIDATE_RULES = {
   title: {
     required: true,
     minLength: 4,
@@ -7,6 +7,8 @@ export const VALIDATE_RULES = {
   text: {
     required: true,
     minLength: 6,
-    maxLength: 30
-  }
+    maxLength: 30,
+  },
 };
+
+export default VALIDATE_RULES;

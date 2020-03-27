@@ -7,11 +7,12 @@ import styles from './style.module.scss';
  * Return semantically-correct <textarea> with onBlur and onChange events
  * @param {string} value          - currentValue of textarea
  * @param {string} placeholder    - placeholder title
- * @param {string} name           - value for native name attribute. Used for validation, be careful with them
+ * @param {string} name           - value for native name attribute.
+ *                                  Used for validation, be careful with them
  * @param {string} errorMessage   - value of error for ErrorLabel.
  * @param {functin} handleChange  - callback for onChange event
  * @param {functin} handleBlur    - callback for onBlur event
- * 
+ *
  */
 const Textarea = ({
   value, placeholder, name, errorMessage, handleChange, handleBlur,

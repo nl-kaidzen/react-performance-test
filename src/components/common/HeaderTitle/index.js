@@ -1,7 +1,6 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
-import styles from './style.module.scss';
 import PropTypes from 'prop-types';
+import styles from './style.module.scss';
 
 /**
  * Return <h1> with title. Used on each route.
@@ -13,7 +12,7 @@ const HeaderTitle = ({ title }) => (
 );
 
 HeaderTitle.propTypes = {
-  title: PropTypes.string,
-}
+  title: PropTypes.string.isRequired,
+};
 
 export default React.memo(HeaderTitle);

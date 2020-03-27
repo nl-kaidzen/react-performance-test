@@ -3,12 +3,12 @@ import { useHistory } from 'react-router-dom';
 import HeaderTitle from 'components/common/HeaderTitle';
 import CardForm from 'components/CardForm';
 import Button from 'components/common/Button';
-import styles from './style.module.scss';
 import { BUTTON_TYPES_MAP } from 'constants/storage';
 import { HOME_ROUTE } from 'constants/routes';
-import { useValidate } from 'hooks/useValidate';
-import { VALIDATE_RULES } from './validationSettings';
+import useValidate from 'hooks/useValidate';
 import PropTypes from 'prop-types';
+import VALIDATE_RULES from './validationSettings';
+import styles from './style.module.scss';
 
 /**
  * Return new NewCardForm
@@ -22,10 +22,11 @@ const NewCardForm = ({ addCard }) => {
     text: '',
   };
   const [fields, setFields] = useState(initialFieldsValue);
-  const [isFieldValid, errorList, validateForm, validateField] = useValidate(fields, VALIDATE_RULES);
+  const [isFieldValid, errorList,
+    validateForm, validateField] = useValidate(fields, VALIDATE_RULES);
 
   const handleChange = (event) => {
-    const target = event.target;
+    const { target } = event;
     setFields({
       ...fields,
       [target.name]: target.value,
@@ -60,10 +61,10 @@ const NewCardForm = ({ addCard }) => {
       </div>
     </>
   );
-}
+};
 
 NewCardForm.propTypes = {
   addCard: PropTypes.func.isRequired,
-}
+};
 
 export default React.memo(NewCardForm);
