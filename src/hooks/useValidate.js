@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 const VALIDATE_FUNCTIONS_MAP = {
   required: (value) => value.trim() !== '' ? true : false,
@@ -21,6 +21,18 @@ const generateErrorMessage = (rule, fieldName, validateRules) => {
   const failedRuleLimitingValue = validateRules[fieldName][rule];
   return GENERATE_ERRORS_FUNCTIONS_MAP[rule](failedRuleLimitingValue);
 };
+
+/**
+ * 
+ * 
+ * @param {string} value -          current value;
+ * @param {string} fieldName -      name of current validated field;
+ * @param {object} validateRules -  Ex: { required: true, minLength: 6, maxLength: 12 };
+ * 
+ * @returns {array} -   [rule: string, isValid: boolean]
+ *                      rule: name of failed rule (Ex: required, manLength, etc...);
+ *                      isValid: boolean value
+ */
 
 const validateFieldValue = (value, fieldName, validateRules) => {
   let isFieldValid = false;
@@ -48,7 +60,16 @@ const validateFieldValue = (value, fieldName, validateRules) => {
   return [isFieldValid, errorMessage]; 
 };
 
-export const useValidate = (fields, validateRules) => {
+/**
+ * useValidate - Hook, which used for validating forms.
+ * 
+ * @param {object} fields - An object with all values of validated input fields. Ex: { title: 'Title', text: 'Text' }
+ * @param {object} validateRules - Ex: { required: true, minLength: 6, maxLength: 12 }
+ * 
+ * @returns {array} - Array with values and functions. Check another comments for nasted functions
+ */
+
+export function useValidate(fields, validateRules) {
   const [isFieldValid, setFieldValid] = useState(false);
   const [errorList, setError] = useState({
     ...ERROR_LIST_INITIAL_MAP,
@@ -56,7 +77,13 @@ export const useValidate = (fields, validateRules) => {
   const formValidationStatusByEachField = {};
   const formErrorList = {};
 
-  const validateForm = () => {
+  /**
+   * validateForm - functions, which used for validate all form. Use as onSubmit - effect.
+   * 
+   * @returns {boolean} - is form valid (true | false).
+   */
+
+  const validateForm = useCallback(() => {
     const fieldsArrayFromEntries = Object.entries(fields);
     fieldsArrayFromEntries.forEach(([fieldName, fieldValue]) => {
       const [fieldIsValid, fieldErrorMessage] = validateFieldValue(fieldValue, fieldName, validateRules);
@@ -69,9 +96,15 @@ export const useValidate = (fields, validateRules) => {
     if (validateStatusArrayForEachField.indexOf(false) === -1) {
       return true;
     }
-  }
+  }, [fields]);
 
-  const validateField = (event) => {
+  /**
+   * validatedField - functions, which used for validate single field. Use as onBlur or onChange - effect.
+   * 
+   * @param {object} event - native object from the browser. This object contains all information about the validated field.
+   */
+
+  const validateField = useCallback((event) => {
     const currentField = event.target;
     const currentFieldValue = fields[currentField.name];
     const [validationValue, errorMessage] = validateFieldValue(currentFieldValue, currentField.name, validateRules);
@@ -80,7 +113,7 @@ export const useValidate = (fields, validateRules) => {
       ...errorList,
       [currentField.name]: errorMessage,
     })
-  };
+  }, [fields]);
 
   return [isFieldValid, errorList, validateForm, validateField];
 }

@@ -4,6 +4,14 @@ import IconButton from 'components/common/IconButton';
 import { ICON_TYPES_MAP } from 'constants/storage'
 import PropTypes from 'prop-types';
 
+/**
+ * Return new Card element. 
+ * Argument is object with keys:
+ * @param {string} title               - value for title
+ * @param {string} text           - value for text
+ * @param {string} id             - id of current card. used for onClick-events and validation
+ * @param {boolean} isFavorite    - card's current status
+ */
 const Card = ({ title, text, id, isFavorite }) => {
   return (
     <li className={styles.card}>

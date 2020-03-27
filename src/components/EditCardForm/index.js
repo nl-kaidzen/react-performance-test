@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import HeaderTitle from 'components/common/HeaderTitle';
 import CardForm from 'components/CardForm';
@@ -10,6 +10,13 @@ import { useValidate } from 'hooks/useValidate';
 import { VALIDATE_RULES } from './validationSettings';
 import PropTypes from 'prop-types';
 
+/**
+ * Return new EditCardForm
+ * Attribute is object with keys:
+ * @param {object} cards          - object of cards
+ * @param {function} updateCard   - callback for Update button
+ * @param {function} removeCard   - callback for Delete button
+ */
 const EditCardForm = ({ cards, updateCard, removeCard }) => {
   const history = useHistory(HOME_ROUTE);
   const { id } = useParams();
@@ -29,17 +36,17 @@ const EditCardForm = ({ cards, updateCard, removeCard }) => {
     });
   };
 
-  const handleUpdateButtonClick = () => {
+  const handleUpdateButtonClick = useCallback(() => {
     if (validateForm()) {
-      updateCard({ id, title: fields.title, text: fields.text });
+      updateCard({ id, fields });
       history.push(HOME_ROUTE);
     }
-  };
+  }, [id, fields]);
 
-  const handleDeleteButtonClick = () => {
+  const handleDeleteButtonClick = useCallback(() => {
     removeCard(id);
     history.push(HOME_ROUTE);
-  }
+  }, [id, fields]);
   const [isFieldValid, errorList, validateForm, validateField] = useValidate(fields, VALIDATE_RULES);
 
   return (

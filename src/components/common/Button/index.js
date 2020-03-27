@@ -7,6 +7,13 @@ const TYPE_TO_CLASSNAMES_MAP = {
   default: `${styles.formButton}`,
   delete: `${styles.formButton} ${styles['formButton--delete']}`,
 };
+/**
+ * Return symantically-correct button with presetted class
+ * 
+ * @param {string} type -       type of button. Check BUTTON_TYPES_MAP for info.
+ * @param {string} title -      label for button.
+ * @param {function} onClick -  callback for onClick-event.
+ */
 
 const Button = ({ type, title, onClick }) => {
   const buttonType = BUTTON_TYPES_MAP[type];

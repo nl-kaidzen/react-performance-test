@@ -7,6 +7,12 @@ import HeaderTitle from 'components/common/HeaderTitle';
 import styles from './style.module.scss';
 import PropTypes from 'prop-types';
 
+/**
+ * Return new CardList Element, based on Card - elements 
+ * Arguments is object with keys:
+ * @param {object} cards                        - object with cards
+ * @param {function} toggleCardFavoriteStatus   - callback for onClick - event. switch card status using it's id
+ */
 const CardList = ({ cards, toggleCardFavoriteStatus}) => {
   const history = useHistory(HOME_ROUTE);
   const cardsList = (Object.entries(cards).map(([key, card]) => (

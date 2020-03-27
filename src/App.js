@@ -9,9 +9,7 @@ import NewCardForm from 'components/NewCardForm';
 import EditCardForm from 'components/EditCardForm';
 
 const App = () => {
-  const [cards, cardsAPI] = useCards(
-    getCardsFromStorage() || {},
-  );
+  const [cards, cardsAPI] = useCards(getCardsFromStorage());
 
   const { addCard, updateCard, removeCard, toggleFavoriteStatus } = cardsAPI;
 

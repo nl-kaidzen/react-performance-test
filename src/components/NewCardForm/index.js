@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import HeaderTitle from 'components/common/HeaderTitle';
 import CardForm from 'components/CardForm';
@@ -10,14 +10,19 @@ import { useValidate } from 'hooks/useValidate';
 import { VALIDATE_RULES } from './validationSettings';
 import PropTypes from 'prop-types';
 
+/**
+ * Return new NewCardForm
+ * Attribute is object with keys:
+ * @param {function} addCard   - callback for Save button
+ */
 const NewCardForm = ({ addCard }) => {
   const history = useHistory(HOME_ROUTE);
-
   const initialFieldsValue = {
     title: '',
     text: '',
   };
   const [fields, setFields] = useState(initialFieldsValue);
+  const [isFieldValid, errorList, validateForm, validateField] = useValidate(fields, VALIDATE_RULES);
 
   const handleChange = (event) => {
     const target = event.target;
@@ -27,15 +32,12 @@ const NewCardForm = ({ addCard }) => {
     });
   };
 
-  const handleAddButtonClick = () => {
-    debugger;
+  const handleAddButtonClick = useCallback(() => {
     if (validateForm()) {
-      addCard(fields.title, fields.text);
+      addCard(fields);
       history.push(HOME_ROUTE);
     }
-  };
-
-  const [isFieldValid, errorList, validateForm, validateField] = useValidate(fields, VALIDATE_RULES);
+  }, [fields]);
 
   return (
     <>

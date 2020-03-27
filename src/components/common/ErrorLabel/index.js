@@ -2,6 +2,10 @@ import React from 'react';
 import styles from './style.module.scss';
 import PropTypes from 'prop-types'
 
+/**
+ * Return label with errorMessage
+ * @param {string} errorMessage - error for <p>
+ */
 const ErrorLabel = ({ errorMessage }) => {
   return(
     <p
