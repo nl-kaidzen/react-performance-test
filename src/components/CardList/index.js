@@ -1,15 +1,15 @@
 import React, { useCallback } from 'react';
 import { useHistory, generatePath } from 'react-router-dom';
 import { EDIT_CARD_ROUTE, HOME_ROUTE } from 'constants/routes';
-import Card from '../Card/Card';
-import AddCardButton from '../AddCardButton/AddCardButton';
-import HeaderTitle from '../common/HeaderTitle/HeaderTitle';
-import styles from './CardList.module.scss';
+import Card from 'components/Card';
+import AddCardButton from 'components/AddCardButton';
+import HeaderTitle from 'components/common/HeaderTitle';
+import styles from './style.module.scss';
 import PropTypes from 'prop-types';
 
-const CardList = (props) => {
+const CardList = ({ cards, toggleCardFavoriteStatus}) => {
   const history = useHistory(HOME_ROUTE);
-  const cards = (Object.entries(props.cards).map(([key, card]) => (
+  const cardsList = (Object.entries(cards).map(([key, card]) => (
     <Card 
       title={card.title}
       text={card.text}
@@ -23,8 +23,8 @@ const CardList = (props) => {
     if (target) {
       switch (target.dataset.action) {
         case 'edit': return history.push(generatePath(EDIT_CARD_ROUTE, { id: target.dataset.id }));
-        case 'like': return props.toggleCardFavoriteStatus(target.dataset.id);
-        case 'dislike': return props.toggleCardFavoriteStatus(target.dataset.id);
+        case 'like': return toggleCardFavoriteStatus(target.dataset.id);
+        case 'dislike': return toggleCardFavoriteStatus(target.dataset.id);
       }
     }
   }, []);
@@ -35,7 +35,7 @@ const CardList = (props) => {
         className={styles.list}
         onClick={handleClick}>
         <AddCardButton />
-        {cards}
+        {cardsList}
       </ul>
     </>
   );

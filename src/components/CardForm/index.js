@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Input from '../common/Input/Input';
-import Textarea from '../common/Textarea/index';
-import styles from './CardForm.module.scss';
+import Input from 'components/common/Input';
+import Textarea from 'components/common/Textarea';
+import styles from './style.module.scss';
 
 const CardForm = ({
   fields, handleChange, handleBlur, errorList,

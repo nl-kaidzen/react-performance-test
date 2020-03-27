@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ErrorLabel from '../ErrorLabel';
+import ErrorLabel from 'components/common/ErrorLabel';
 import styles from './style.module.scss';
 
 const Textarea = ({

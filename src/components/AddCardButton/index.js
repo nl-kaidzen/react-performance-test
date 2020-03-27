@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from './AddCardButton.module.scss';
+import styles from './style.module.scss';
 import { CREATE_CARD_ROUTE } from 'constants/routes';
 
 const AddCardButton = () => (

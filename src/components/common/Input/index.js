@@ -1,7 +1,7 @@
 import React from 'react';
 import ErrorLabel from 'components/common/ErrorLabel'
 import PropTypes from 'prop-types';
-import styles from './Input.module.scss'
+import styles from './style.module.scss';
 
 const Input = ({ value, placeholder, name, errorMessage, handleChange, handleBlur }) => {
   return (

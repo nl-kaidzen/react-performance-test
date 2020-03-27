@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './Card.module.scss';
-import IconButton from '../common/IconButton/IconButton';
+import styles from './style.module.scss';
+import IconButton from 'components/common/IconButton';
 import { ICON_TYPES_MAP } from 'constants/storage'
 import PropTypes from 'prop-types';
 
@@ -11,11 +11,11 @@ const Card = ({ title, text, id, isFavorite }) => {
       <p className={styles.cardText}>{text}</p>
       <div className={styles.cardButtonWrapper}>
         <IconButton
-          type={ICON_TYPES_MAP.edit}
+          iconType={ICON_TYPES_MAP.edit}
           dataId={id}
         />
         <IconButton
-          type={isFavorite ? ICON_TYPES_MAP.dislike : ICON_TYPES_MAP.like}
+          iconType={isFavorite ? ICON_TYPES_MAP.dislike : ICON_TYPES_MAP.like}
           dataId={id}
         />
       </div>

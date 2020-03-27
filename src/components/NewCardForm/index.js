@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import HeaderTitle from 'components/common/HeaderTitle/HeaderTitle';
-import CardForm from 'components/CardForm/CardForm';
-import Button from 'components/common/Button/Button';
-import styles from './NewCardForm.module.scss';
+import HeaderTitle from 'components/common/HeaderTitle';
+import CardForm from 'components/CardForm';
+import Button from 'components/common/Button';
+import styles from './style.module.scss';
 import { BUTTON_TYPES_MAP } from 'constants/storage';
 import { HOME_ROUTE } from 'constants/routes';
-import { TITLE_VALIDATION_SETTINGS } from 'helpers/validation/validationSettings';
+import { useValidate } from 'hooks/useValidate';
+import { VALIDATE_RULES } from './validationSettings';
 import PropTypes from 'prop-types';
 
-const NewCardForm = (props) => {
+const NewCardForm = ({ addCard }) => {
   const history = useHistory(HOME_ROUTE);
 
   const initialFieldsValue = {
@@ -27,11 +28,14 @@ const NewCardForm = (props) => {
   };
 
   const handleAddButtonClick = () => {
-    if (fields.title.length >= TITLE_VALIDATION_SETTINGS.minLength) {
-      props.addCard(fields.title, fields.text);
+    debugger;
+    if (validateForm()) {
+      addCard(fields.title, fields.text);
       history.push(HOME_ROUTE);
     }
   };
+
+  const [isFieldValid, errorList, validateForm, validateField] = useValidate(fields, VALIDATE_RULES);
 
   return (
     <>
@@ -39,7 +43,10 @@ const NewCardForm = (props) => {
       <div className={styles.form}>
         <CardForm
           fields={fields}
+          isFieldValid={isFieldValid}
+          errorList={errorList}
           handleChange={handleChange}
+          handleBlur={validateField}
         />
         <div className={styles.formBtnWrapper}>
           <Button

@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import styles from './HeaderTitle.module.scss';
+import styles from './style.module.scss';
 import PropTypes from 'prop-types';
 
-const HeaderTitle = (props) => (
-  <h1 className={styles.title}>{props.title}</h1>
+const HeaderTitle = ({ title }) => (
+  <h1 className={styles.title}>{title}</h1>
 );
 
 HeaderTitle.propTypes = {

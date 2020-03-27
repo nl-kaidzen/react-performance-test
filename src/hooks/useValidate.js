@@ -17,25 +17,12 @@ const ERROR_LIST_INITIAL_MAP = {
   text: '',
 };
 
-const validateRules = {
-  title: {
-    required: true,
-    minLength: 4,
-    maxLength: 12,
-  },
-  text: {
-    required: true,
-    minLength: 6,
-    maxLength: 30
-  }
-};
-
-const generateErrorMessage = (rule, fieldName) => {
+const generateErrorMessage = (rule, fieldName, validateRules) => {
   const failedRuleLimitingValue = validateRules[fieldName][rule];
   return GENERATE_ERRORS_FUNCTIONS_MAP[rule](failedRuleLimitingValue);
 };
 
-const validateFieldValue = (value, fieldName) => {
+const validateFieldValue = (value, fieldName, validateRules) => {
   let isFieldValid = false;
   let errorMessage = '';
 
@@ -55,14 +42,13 @@ const validateFieldValue = (value, fieldName) => {
   } else {
     const [failedRule, validationStatus] = firstFailedRule;
     isFieldValid = validationStatus;
-    errorMessage = generateErrorMessage(failedRule, fieldName);
+    errorMessage = generateErrorMessage(failedRule, fieldName, validateRules);
   }
 
   return [isFieldValid, errorMessage]; 
 };
 
-export const useValidate = (fields) => {
-  const [isFormValid, setFormValid] = useState(false);
+export const useValidate = (fields, validateRules) => {
   const [isFieldValid, setFieldValid] = useState(false);
   const [errorList, setError] = useState({
     ...ERROR_LIST_INITIAL_MAP,
@@ -73,7 +59,7 @@ export const useValidate = (fields) => {
   const validateForm = () => {
     const fieldsArrayFromEntries = Object.entries(fields);
     fieldsArrayFromEntries.forEach(([fieldName, fieldValue]) => {
-      const [fieldIsValid, fieldErrorMessage] = validateFieldValue(fieldValue, fieldName);
+      const [fieldIsValid, fieldErrorMessage] = validateFieldValue(fieldValue, fieldName, validateRules);
       formValidationStatusByEachField[fieldName] = fieldIsValid;
       formErrorList[fieldName] = fieldErrorMessage;
     }); 
@@ -81,15 +67,14 @@ export const useValidate = (fields) => {
     
     const validateStatusArrayForEachField = Object.values(formValidationStatusByEachField);
     if (validateStatusArrayForEachField.indexOf(false) === -1) {
-      setFormValid(true);
-      return isFormValid;
+      return true;
     }
   }
 
   const validateField = (event) => {
     const currentField = event.target;
     const currentFieldValue = fields[currentField.name];
-    const [validationValue, errorMessage] = validateFieldValue(currentFieldValue, currentField.name);
+    const [validationValue, errorMessage] = validateFieldValue(currentFieldValue, currentField.name, validateRules);
     setFieldValid(validationValue);
     setError({
       ...errorList,

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Button.module.scss';
+import styles from './style.module.scss';
 import PropTypes from 'prop-types';
 import { BUTTON_TYPES_MAP } from 'constants/storage';
 
@@ -8,15 +8,15 @@ const TYPE_TO_CLASSNAMES_MAP = {
   delete: `${styles.formButton} ${styles['formButton--delete']}`,
 };
 
-const Button = (props) => {
-  const buttonType = BUTTON_TYPES_MAP[props.type];
+const Button = ({ type, title, onClick }) => {
+  const buttonType = BUTTON_TYPES_MAP[type];
   return (
     <button
-      onClick={props.onClick}
+      onClick={onClick}
       className={TYPE_TO_CLASSNAMES_MAP[buttonType]}
       type="button"
     >
-      {props.title}
+      {title}
     </button>
   )
 };

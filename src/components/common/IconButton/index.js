@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './IconButton.module.scss';
+import styles from './style.module.scss';
 import PropTypes from 'prop-types';
 import { ICON_TYPES_MAP } from 'constants/storage'
 
@@ -16,22 +16,22 @@ const TYPE_TO_SVG_MAP = {
   </svg>),
 };
 
-const IconButton = (props) => (
+const IconButton = ({ iconType, dataId, onClick }) => (
   <button
-    onClick={props.onClick}
+    data-action={iconType}
+    aria-label={iconType}
+    data-id={dataId}
+    onClick={onClick}
     className={styles.iconButton}
     type="button"
-    data-id={props.dataId}
-    data-action={props.type}
-    aria-label={props.type}
   >
-    {TYPE_TO_SVG_MAP[props.type]}
+    {TYPE_TO_SVG_MAP[iconType]}
   </button>
 );
 
 IconButton.propTypes = {
   onClick: PropTypes.func,
-  type: PropTypes.oneOf([ICON_TYPES_MAP.edit, ICON_TYPES_MAP.like, ICON_TYPES_MAP.dislike]).isRequired,
+  iconType: PropTypes.oneOf([ICON_TYPES_MAP.edit, ICON_TYPES_MAP.like, ICON_TYPES_MAP.dislike]).isRequired,
   dataId: PropTypes.string.isRequired,
 }
 

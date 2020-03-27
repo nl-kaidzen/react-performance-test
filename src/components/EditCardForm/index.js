@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import HeaderTitle from 'components/common/HeaderTitle/HeaderTitle';
-import CardForm from 'components/CardForm/CardForm';
-import Button from 'components/common/Button/Button';
-import styles from './EditCardForm.module.scss';
+import HeaderTitle from 'components/common/HeaderTitle';
+import CardForm from 'components/CardForm';
+import Button from 'components/common/Button';
+import styles from './style.module.scss';
 import { BUTTON_TYPES_MAP } from 'constants/storage';
 import { HOME_ROUTE } from 'constants/routes';
-import { useValidate } from 'helpers/validation/newValidation';
+import { useValidate } from 'hooks/useValidate';
+import { VALIDATE_RULES } from './validationSettings';
 import PropTypes from 'prop-types';
 
-const EditCardForm = (props) => {
+const EditCardForm = ({ cards, updateCard, removeCard }) => {
   const history = useHistory(HOME_ROUTE);
   const { id } = useParams();
-  const editedCard = props.cards[id];
+  const editedCard = cards[id];
 
   const initialFieldsValue = {
     title: editedCard.title,
@@ -30,16 +31,16 @@ const EditCardForm = (props) => {
 
   const handleUpdateButtonClick = () => {
     if (validateForm()) {
-      props.updateCard({ id, title: fields.title, text: fields.text });
+      updateCard({ id, title: fields.title, text: fields.text });
       history.push(HOME_ROUTE);
     }
   };
 
   const handleDeleteButtonClick = () => {
-    props.removeCard(id);
+    removeCard(id);
     history.push(HOME_ROUTE);
   }
-  const [isFieldValid, errorList, validateForm, validateField] = useValidate(fields);
+  const [isFieldValid, errorList, validateForm, validateField] = useValidate(fields, VALIDATE_RULES);
 
   return (
     <>
