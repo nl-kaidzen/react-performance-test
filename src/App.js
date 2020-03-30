@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
@@ -10,11 +9,9 @@ import NewCardForm from 'components/NewCardForm';
 import EditCardForm from 'components/EditCardForm';
 
 const App = () => {
-  const [cards, cardsAPI] = useCards(getCardsFromStorage());
-
   const {
-    addCard, updateCard, removeCard, toggleFavoriteStatus,
-  } = cardsAPI;
+    cards, addCard, updateCard, removeCard, toggleFavoriteStatus,
+  } = useCards(getCardsFromStorage());
 
   useEffect(() => setCardsToStorage(cards), [cards]);
 

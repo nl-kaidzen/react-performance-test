@@ -3,13 +3,12 @@ import getUUID from 'helpers/common';
 
 /**
  *
- * @param {object} cards -    Object of objects (card)
+ * @param {object} cards - Object of objects (card)
  *
- * @returns {array} -         [cardState, api]
- *                  -         cardState - updated cards object
- *                  -         api - object of functions, which used for manipulate cards-object
+ * @returns {array} - [cardState, api]
+ *                  - cardState - updated cards object
+ *                  - api - object of functions, which used for manipulate cards-object
  */
-
 function useCards(cards) {
   const [cardsState, setCards] = useState(cards);
 
@@ -18,7 +17,6 @@ function useCards(cards) {
    *
    * @param {object} fields - object of fields, used in form. Ex: { title: 'title', text: 'text' };
    */
-
   const addCard = useCallback(
     (fields) => {
       const id = getUUID();
@@ -37,7 +35,6 @@ function useCards(cards) {
    *
    * @param {string} id - Key of card
    */
-
   const removeCard = useCallback(
     (id) => {
       // eslint-disable-next-line no-unused-vars
@@ -49,10 +46,9 @@ function useCards(cards) {
   /**
    * Arrow function for update card with this id
    *
-   * @param {string} id -     Key of card
+   * @param {string} id - Key of card
    * @param {object} fields - object of fields, used in form. Ex: { title: 'title', text: 'text' };
    */
-
   const updateCard = useCallback(
     ({ id, fields }) => {
       const newCardsList = { ...cardsState };
@@ -79,11 +75,13 @@ function useCards(cards) {
     }, [cardsState],
   );
 
-  const api = {
-    addCard, updateCard, removeCard, toggleFavoriteStatus,
+  return {
+    cards: cardsState,
+    addCard,
+    updateCard,
+    removeCard,
+    toggleFavoriteStatus,
   };
-
-  return [cardsState, api];
 }
 
 export default useCards;
