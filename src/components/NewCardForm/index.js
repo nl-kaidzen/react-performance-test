@@ -17,20 +17,17 @@ import styles from './style.module.scss';
  */
 const NewCardForm = ({ addCard }) => {
   const history = useHistory(HOME_ROUTE);
-  const initialFieldsValue = {
-    title: '',
-    text: '',
-  };
-  const [fields, setFields] = useState(initialFieldsValue);
-  const [isFieldValid, errorList,
-    validateForm, validateField] = useValidate(fields, VALIDATE_RULES);
+  const [fields, setFields] = useState({ title: '', text: '' });
+  const {
+    isFieldValid, errorList, validateForm, validateField,
+  } = useValidate(fields, VALIDATE_RULES);
 
   const handleChange = (event) => {
     const { target } = event;
-    setFields({
-      ...fields,
+    setFields((prevFields) => ({
+      ...prevFields,
       [target.name]: target.value,
-    });
+    }));
   };
 
   const handleAddButtonClick = useCallback(() => {

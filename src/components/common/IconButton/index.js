@@ -24,12 +24,11 @@ const TYPE_TO_SVG_MAP = {
  * @param {string} dataId -     id of current card, where iconButton will placed.
  * @param {function} onClick -  callback for onClick - event
  */
-const IconButton = ({ iconType, dataId, onClick }) => (
+const IconButton = ({ iconType, dataId, handleClick }) => (
   <button
-    data-action={iconType}
     aria-label={iconType}
     data-id={dataId}
-    onClick={onClick}
+    onClick={handleClick}
     className={styles.iconButton}
     type="button"
   >
@@ -38,7 +37,7 @@ const IconButton = ({ iconType, dataId, onClick }) => (
 );
 
 IconButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  handleClick: PropTypes.func.isRequired,
   iconType: PropTypes.oneOf([ICON_TYPES_MAP.edit,
     ICON_TYPES_MAP.like, ICON_TYPES_MAP.dislike]).isRequired,
   dataId: PropTypes.string.isRequired,

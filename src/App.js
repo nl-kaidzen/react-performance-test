@@ -8,6 +8,9 @@ import CardList from 'components/CardList';
 import NewCardForm from 'components/NewCardForm';
 import EditCardForm from 'components/EditCardForm';
 
+/**
+ * @param {}
+ */
 const App = () => {
   const {
     cards, addCard, updateCard, removeCard, toggleFavoriteStatus,

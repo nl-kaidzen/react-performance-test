@@ -6,14 +6,13 @@ import styles from './style.module.scss';
 
 /**
  * Return new Card element.
- * Argument is object with keys:
- * @param {string} title               - value for title
- * @param {string} text           - value for text
- * @param {string} id             - id of current card. used for onClick-events and validation
- * @param {boolean} isFavorite    - card's current status
+ * @param {string} title - value for title
+ * @param {string} text - value for text
+ * @param {string} id - id of current card. used for onClick-events and validation
+ * @param {boolean} isFavorite - card's current status
  */
 const Card = ({
-  title, text, id, isFavorite,
+  title, text, id, isFavorite, handleEditClick, handleFavoriteClick,
 }) => (
   <li className={styles.card}>
     <h2 className={styles.cardTitle}>{title}</h2>
@@ -22,10 +21,12 @@ const Card = ({
       <IconButton
         iconType={ICON_TYPES_MAP.edit}
         dataId={id}
+        handleClick={handleEditClick}
       />
       <IconButton
         iconType={isFavorite ? ICON_TYPES_MAP.dislike : ICON_TYPES_MAP.like}
         dataId={id}
+        handleClick={handleFavoriteClick}
       />
     </div>
   </li>
@@ -36,6 +37,8 @@ Card.propTypes = {
   title: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   isFavorite: PropTypes.bool.isRequired,
+  handleEditClick: PropTypes.func.isRequired,
+  handleFavoriteClick: PropTypes.func.isRequired,
 };
 
 export default React.memo(Card);

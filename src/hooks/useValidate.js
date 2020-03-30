@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
 import { useState, useCallback } from 'react';
 
@@ -27,13 +26,13 @@ const generateErrorMessage = (rule, fieldName, validateRules) => {
 /**
  *
  *
- * @param {string} value -          current value;
- * @param {string} fieldName -      name of current validated field;
- * @param {object} validateRules -  Ex: { required: true, minLength: 6, maxLength: 12 };
+ * @param {string} value - current value;
+ * @param {string} fieldName - name of current validated field;
+ * @param {object} validateRules - Ex: { required: true, minLength: 6, maxLength: 12 };
  *
- * @returns {array} -   [rule: string, isValid: boolean]
- *                      rule: name of failed rule (Ex: required, manLength, etc...);
- *                      isValid: boolean value
+ * @returns {array} - [rule: string, isValid: boolean]
+ * rule: name of failed rule (Ex: required, manLength, etc...);
+ * isValid: boolean value
  */
 
 const validateFieldValue = (value, fieldName, validateRules) => {
@@ -95,12 +94,15 @@ function useValidate(fields, validateRules) {
       formValidationStatusByEachField[fieldName] = fieldIsValid;
       formErrorList[fieldName] = fieldErrorMessage;
     });
+    const reducer = (accumulator, [fieldName, fieldValue]) => ({
+      ...accumulator,
+      [fieldName]: fieldValue,
+    });
+    //Finish here
     setError(formErrorList);// TODO: Change to reduce
 
     const validateStatusArrayForEachField = Object.values(formValidationStatusByEachField);
-    if (validateStatusArrayForEachField.indexOf(false) === -1) {
-      return true;
-    }
+    return validateStatusArrayForEachField.every((elem) => elem !== false);
   }, [fields]);
 
   /**
@@ -124,7 +126,9 @@ function useValidate(fields, validateRules) {
     });
   }, [fields]);
 
-  return [isFieldValid, errorList, validateForm, validateField];
+  return {
+    isFieldValid, errorList, validateForm, validateField,
+  };
 }
 
 export default useValidate;

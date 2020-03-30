@@ -12,23 +12,19 @@ import styles from './style.module.scss';
 
 /**
  * Return new EditCardForm
- * Attribute is object with keys:
- * @param {object} cards          - object of cards
- * @param {function} updateCard   - callback for Update button
- * @param {function} removeCard   - callback for Delete button
+ * @param {object} cards - object of cards
+ * @param {function} updateCard - callback for Update button
+ * @param {function} removeCard - callback for Delete button
  */
 const EditCardForm = ({ cards, updateCard, removeCard }) => {
   const history = useHistory(HOME_ROUTE);
   const { id } = useParams();
   const editedCard = cards[id];
 
-  const initialFieldsValue = {
-    title: editedCard.title,
-    text: editedCard.text,
-  };
-  const [fields, setFields] = useState(initialFieldsValue);
-  const [isFieldValid, errorList,
-    validateForm, validateField] = useValidate(fields, VALIDATE_RULES);
+  const [fields, setFields] = useState({ title: editedCard.title, text: editedCard.text });
+  const {
+    isFieldValid, errorList, validateForm, validateField,
+  } = useValidate(fields, VALIDATE_RULES);
 
 
   const handleChange = (event) => {
@@ -40,10 +36,11 @@ const EditCardForm = ({ cards, updateCard, removeCard }) => {
   };
 
   const handleUpdateButtonClick = useCallback(() => {
-    if (validateForm()) {
-      updateCard({ id, fields });
-      history.push(HOME_ROUTE);
+    if (!validateForm()) {
+      return;
     }
+    updateCard({ id, fields });
+    history.push(HOME_ROUTE);
   }, [id, fields]);
 
   const handleDeleteButtonClick = useCallback(() => {
