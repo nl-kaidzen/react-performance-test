@@ -10,8 +10,8 @@ const TYPE_TO_CLASSNAMES_MAP = {
 /**
  * Return symantically-correct button with presetted class
  *
- * @param {string} type -       type of button. Check BUTTON_TYPES_MAP for info.
- * @param {string} title -      label for button.
+ * @param {string} type - type of button. Check BUTTON_TYPES_MAP for info.
+ * @param {string} title - label for button.
  * @param {function} onClick -  callback for onClick-event.
  */
 

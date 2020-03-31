@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { CREATE_CARD_ROUTE } from 'constants/routes';
 import styles from './style.module.scss';
 
+/**
+ * Create new AddCartButton. A11Y realized by aria-label attribute
+ */
 const AddCardButton = () => (
   <li>
     <Link

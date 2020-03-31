@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useState, useCallback } from 'react';
 
 const VALIDATE_FUNCTIONS_MAP = {
@@ -67,7 +66,6 @@ const validateFieldValue = (value, fieldName, validateRules) => {
  * @param {object} fields - An object with all values of validated input fields.
  *                          Ex: { title: 'Title', text: 'Text' }
  * @param {object} validateRules - Ex: { required: true, minLength: 6, maxLength: 12 }
- *
  * @returns {array} - Array with values and functions. Check another comments for nasted functions
  */
 
@@ -76,7 +74,6 @@ function useValidate(fields, validateRules) {
   const [errorList, setError] = useState({
     ...ERROR_LIST_INITIAL_MAP,
   });
-  const formValidationStatusByEachField = {};
   const formErrorList = {};
 
   /**
@@ -87,7 +84,7 @@ function useValidate(fields, validateRules) {
 
   const validateForm = useCallback(() => {
     const fieldsArrayFromEntries = Object.entries(fields);
-    const reducer = (accumulator, [fieldName, fieldValue]) => {
+    const currentFieldValidationReducer = (accumulator, [fieldName, fieldValue]) => {
       const [fieldIsValid, fieldErrorMessage] = validateFieldValue(
         fieldValue, fieldName, validateRules,
       );
@@ -97,8 +94,10 @@ function useValidate(fields, validateRules) {
         [fieldName]: fieldIsValid,
       };
     };
-    const formValidationStatusArray = fieldsArrayFromEntries.reduce(reducer, {});
-    setError(formErrorList);// TODO: Change to reduce
+    const formValidationStatusArray = fieldsArrayFromEntries.reduce(
+      currentFieldValidationReducer, {},
+    );
+    setError(formErrorList);
 
     const validateStatusArrayForEachField = Object.values(formValidationStatusArray);
     return validateStatusArrayForEachField.every((elem) => elem !== false);

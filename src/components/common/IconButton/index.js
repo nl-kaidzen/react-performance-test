@@ -20,9 +20,9 @@ const TYPE_TO_SVG_MAP = {
 };
 /**
  * Return symantically-correct Iconed Button with aria-label and data-atributes
- * @param {string} iconType -   type of icon
- * @param {string} dataId -     id of current card, where iconButton will placed.
- * @param {function} onClick -  callback for onClick - event
+ * @param {string} iconType - type of icon
+ * @param {string} dataId - id of current card, where iconButton will placed.
+ * @param {function} onClick - callback for onClick - event
  */
 const IconButton = ({ iconType, dataId, handleClick }) => (
   <button

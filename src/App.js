@@ -9,7 +9,8 @@ import NewCardForm from 'components/NewCardForm';
 import EditCardForm from 'components/EditCardForm';
 
 /**
- * @param {}
+ * The root component of the application. Contains routing for navigation.
+ * Uses the useCards-hook to work with cards. Saves cards to the localStorage when unmounting.
  */
 const App = () => {
   const {

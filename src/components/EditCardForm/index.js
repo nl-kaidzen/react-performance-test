@@ -12,6 +12,7 @@ import styles from './style.module.scss';
 
 /**
  * Return new EditCardForm
+ * uses useValidate hook for validate single field or all form.
  * @param {object} cards - object of cards
  * @param {function} updateCard - callback for Update button
  * @param {function} removeCard - callback for Delete button
@@ -29,10 +30,10 @@ const EditCardForm = ({ cards, updateCard, removeCard }) => {
 
   const handleChange = (event) => {
     const { target } = event;
-    setFields({
-      ...fields,
+    setFields((prevFields) => ({
+      ...prevFields,
       [target.name]: target.value,
-    });
+    }));
   };
 
   const handleUpdateButtonClick = useCallback(() => {

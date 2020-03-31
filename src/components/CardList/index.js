@@ -11,9 +11,8 @@ import styles from './style.module.scss';
 /**
  * Return new CardList Element, based on Card - elements
  * Arguments is object with keys:
- * @param {object} cards                        - object with cards
- * @param {function} toggleCardFavoriteStatus   - callback for onClick - event.
- *                                                switch card status using it's id
+ * @param {object} cards - object with cards
+ * @param {function} toggleCardFavoriteStatus - callback for onClick - event.
  */
 const CardList = ({ cards, toggleCardFavoriteStatus }) => {
   const history = useHistory(HOME_ROUTE);

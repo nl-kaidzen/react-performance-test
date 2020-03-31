@@ -2,9 +2,7 @@ import { useState, useCallback } from 'react';
 import { getUUID } from 'helpers/common';
 
 /**
- *
  * @param {object} cards - Object of objects (card)
- *
  * @returns {object} - Object with new cards, errors, validate status and validate methods
  */
 function useCards(cards) {
@@ -12,7 +10,6 @@ function useCards(cards) {
 
   /**
    * Arrow function for add new card into cards - object
-   *
    * @param {object} fields - object of fields, used in form. Ex: { title: 'title', text: 'text' };
    */
   const addCard = useCallback(
@@ -30,7 +27,6 @@ function useCards(cards) {
 
   /**
    * Arrow function for remove card with this id
-   *
    * @param {string} id - Key of card
    */
   const removeCard = useCallback(
@@ -44,7 +40,6 @@ function useCards(cards) {
 
   /**
    * Arrow function for update card with this id
-   *
    * @param {string} id - Key of card
    * @param {object} fields - object of field: value, used in form.
    */
