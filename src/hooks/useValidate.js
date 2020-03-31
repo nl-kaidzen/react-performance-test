@@ -87,21 +87,20 @@ function useValidate(fields, validateRules) {
 
   const validateForm = useCallback(() => {
     const fieldsArrayFromEntries = Object.entries(fields);
-    fieldsArrayFromEntries.forEach(([fieldName, fieldValue]) => {
+    const reducer = (accumulator, [fieldName, fieldValue]) => {
       const [fieldIsValid, fieldErrorMessage] = validateFieldValue(
         fieldValue, fieldName, validateRules,
       );
-      formValidationStatusByEachField[fieldName] = fieldIsValid;
       formErrorList[fieldName] = fieldErrorMessage;
-    });
-    const reducer = (accumulator, [fieldName, fieldValue]) => ({
-      ...accumulator,
-      [fieldName]: fieldValue,
-    });
-    //Finish here
+      return {
+        ...accumulator,
+        [fieldName]: fieldIsValid,
+      };
+    };
+    const formValidationStatusArray = fieldsArrayFromEntries.reduce(reducer, {});
     setError(formErrorList);// TODO: Change to reduce
 
-    const validateStatusArrayForEachField = Object.values(formValidationStatusByEachField);
+    const validateStatusArrayForEachField = Object.values(formValidationStatusArray);
     return validateStatusArrayForEachField.every((elem) => elem !== false);
   }, [fields]);
 
@@ -120,10 +119,10 @@ function useValidate(fields, validateRules) {
       currentFieldValue, currentField.name, validateRules,
     );
     setFieldValid(validationValue);
-    setError({
-      ...errorList,
+    setError((prevErrorList) => ({
+      ...prevErrorList,
       [currentField.name]: errorMessage,
-    });
+    }));
   }, [fields]);
 
   return {

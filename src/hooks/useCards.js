@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import getUUID from 'helpers/common';
+import { getUUID } from 'helpers/common';
 
 /**
  *
