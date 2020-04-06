@@ -10,7 +10,6 @@ import styles from './style.module.scss';
 
 /**
  * Return new CardList Element, based on Card - elements
- * Arguments is object with keys:
  * @param {object} cards - object with cards
  * @param {function} toggleCardFavoriteStatus - callback for onClick - event.
  */
@@ -18,14 +17,14 @@ const CardList = ({ cards, toggleCardFavoriteStatus }) => {
   const history = useHistory(HOME_ROUTE);
 
   const handleFavoriteClick = useCallback((event) => {
-    const target = event.currentTarget;
-    toggleCardFavoriteStatus(target.dataset.id);
-  }, []);
+    const { currentTarget: { dataset } } = event;
+    toggleCardFavoriteStatus(dataset.id);
+  }, [toggleCardFavoriteStatus]);
 
   const handleEditClick = useCallback((event) => {
-    const target = event.currentTarget;
-    history.push(generatePath(EDIT_CARD_ROUTE, { id: target.dataset.id }));
-  }, []);
+    const { currentTarget: { dataset } } = event;
+    history.push(generatePath(EDIT_CARD_ROUTE, { id: dataset.id }));
+  }, [history]);
 
   const cardsList = (Object.entries(cards).map(([key, card]) => (
     <Card

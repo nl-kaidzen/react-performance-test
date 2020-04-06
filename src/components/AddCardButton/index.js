@@ -4,7 +4,8 @@ import { CREATE_CARD_ROUTE } from 'constants/routes';
 import styles from './style.module.scss';
 
 /**
- * Create new AddCartButton. A11Y realized by aria-label attribute
+ * Create new AddCartButton. A11Y is realized by aria-label attribute
+ * @see https://a11yproject.com/
  */
 const AddCardButton = () => (
   <li>

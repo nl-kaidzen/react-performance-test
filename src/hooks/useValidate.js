@@ -9,7 +9,7 @@ const VALIDATE_FUNCTIONS_MAP = {
 const GENERATE_ERRORS_FUNCTIONS_MAP = {
   required: () => 'Please fill this field',
   minLength: (minLength) => `Minimal field length should be more than ${minLength} symbols`,
-  maxLength: (maxLength) => `Minimal field length should be more than ${maxLength} symbols`,
+  maxLength: (maxLength) => `Maximal field length should be less than ${maxLength} symbols`,
 };
 
 const ERROR_LIST_INITIAL_MAP = {
@@ -23,8 +23,6 @@ const generateErrorMessage = (rule, fieldName, validateRules) => {
 };
 
 /**
- *
- *
  * @param {string} value - current value;
  * @param {string} fieldName - name of current validated field;
  * @param {object} validateRules - Ex: { required: true, minLength: 6, maxLength: 12 };
