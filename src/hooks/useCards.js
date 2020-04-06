@@ -22,7 +22,7 @@ function useCards(cards) {
       };
 
       setCards((prevCardsState) => ({ ...prevCardsState, [id]: createdCard }));
-    }, [cardsState],
+    }, [setCards],
   );
 
   /**
@@ -35,7 +35,7 @@ function useCards(cards) {
         const { [id]: deleted, ...newCardsList } = prevCardsState;
         return newCardsList;
       });
-    }, [cardsState],
+    }, [setCards],
   );
 
   /**
@@ -45,6 +45,8 @@ function useCards(cards) {
    */
   const updateCard = useCallback(
     ({ id, fields }) => {
+      // eslint-disable-next-line no-debugger
+      debugger;
       setCards((prevCardsState) => {
         const newCardsList = { ...prevCardsState };
         newCardsList[id] = {
@@ -53,7 +55,7 @@ function useCards(cards) {
         };
         return newCardsList;
       });
-    }, [cardsState],
+    }, [setCards],
   );
 
   /**
@@ -68,7 +70,7 @@ function useCards(cards) {
       const updatedCardElement = newCardsList[id];
       updatedCardElement.isFavorite = !updatedCardElement.isFavorite;
       setCards(newCardsList);
-    }, [cardsState],
+    }, [setCards],
   );
 
   return {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import ErrorLabel from 'components/common/ErrorLabel';
 import PropTypes from 'prop-types';
 
@@ -28,7 +28,7 @@ function withErrorMessage(TextComponent) {
     handleChange: PropTypes.func.isRequired,
     handleBlur: PropTypes.func.isRequired,
   };
-  return FieldWithError;
+  return React.memo(FieldWithError);
 }
 
 export default withErrorMessage;

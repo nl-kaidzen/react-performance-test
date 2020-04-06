@@ -59,10 +59,9 @@ const validateFieldValue = (value, fieldName, validateRules) => {
 };
 
 /**
- * useValidate - Hook, which used for validating forms.
- *
+ * useValidate - Hook, which used for validating forms. *
  * @param {object} fields - An object with all values of validated input fields.
- *                          Ex: { title: 'Title', text: 'Text' }
+ * Ex: { title: 'Title', text: 'Text' }
  * @param {object} validateRules - Ex: { required: true, minLength: 6, maxLength: 12 }
  * @returns {array} - Array with values and functions. Check another comments for nasted functions
  */
@@ -76,7 +75,6 @@ function useValidate(fields, validateRules) {
 
   /**
    * validateForm - functions, which used for validate all form. Use as onSubmit - effect.
-   *
    * @returns {boolean} - is form valid (true | false).
    */
 
@@ -87,10 +85,8 @@ function useValidate(fields, validateRules) {
         fieldValue, fieldName, validateRules,
       );
       formErrorList[fieldName] = fieldErrorMessage;
-      return {
-        ...accumulator,
-        [fieldName]: fieldIsValid,
-      };
+      accumulator[fieldName] = fieldIsValid;
+      return accumulator;
     };
     const formValidationStatusArray = fieldsArrayFromEntries.reduce(
       currentFieldValidationReducer, {},
@@ -103,10 +99,9 @@ function useValidate(fields, validateRules) {
 
   /**
    * validatedField - functions, which used for validate single field.
-   *                  Use as onBlur or onChange - effect.
-   *
+   * Use as onBlur or onChange - effect.
    * @param {object} event - native object from the browser.
-   *                         This object contains all information about the validated field.
+   * This object contains all information about the validated field.
    */
 
   const validateField = useCallback((event) => {
