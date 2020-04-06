@@ -9,7 +9,6 @@ import styles from './style.module.scss';
  * @param {string} placeholder - placeholder title
  * @param {string} name  - value for native name attribute.
  *                         Used for validation, be careful with them
- * @param {string} errorMessage - value of error for ErrorLabel.
  * @param {functin} handleChange - callback for onChange event
  * @param {functin} handleBlur - callback for onBlur event
  */
@@ -26,9 +25,6 @@ const Textarea = ({
       className={styles.formTextarea}
       cols="30"
       rows="10"
-    />
-    <ErrorLabel
-      errorMessage={errorMessage}
     />
   </>
 );

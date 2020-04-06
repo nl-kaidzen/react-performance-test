@@ -6,36 +6,28 @@ import Button from 'components/common/Button';
 import { BUTTON_TYPES_MAP } from 'constants/storage';
 import { HOME_ROUTE } from 'constants/routes';
 import useValidate from 'hooks/useValidate';
+import useFields from 'hooks/useFields';
 import PropTypes from 'prop-types';
 import VALIDATE_RULES from './validationSettings';
 import styles from './style.module.scss';
 
 /**
  * Return new NewCardForm
- * Attribute is object with keys:
  * @param {function} addCard   - callback for Save button
  */
 const NewCardForm = ({ addCard }) => {
   const history = useHistory(HOME_ROUTE);
-  const [fields, setFields] = useState({ title: '', text: '' });
+  const { fields, handleChange } = useFields({ title: '', text: '' });
   const {
     isFieldValid, errorList, validateForm, validateField,
   } = useValidate(fields, VALIDATE_RULES);
-
-  const handleChange = (event) => {
-    const { target } = event;
-    setFields((prevFields) => ({
-      ...prevFields,
-      [target.name]: target.value,
-    }));
-  };
 
   const handleAddButtonClick = useCallback(() => {
     if (validateForm()) {
       addCard(fields);
       history.push(HOME_ROUTE);
     }
-  }, [fields]);
+  }, [fields, validateForm, addCard, history]);
 
   return (
     <>

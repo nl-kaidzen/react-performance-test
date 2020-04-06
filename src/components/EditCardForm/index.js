@@ -6,6 +6,7 @@ import Button from 'components/common/Button';
 import { BUTTON_TYPES_MAP } from 'constants/storage';
 import { HOME_ROUTE } from 'constants/routes';
 import useValidate from 'hooks/useValidate';
+import useFields from 'hooks/useFields';
 import PropTypes from 'prop-types';
 import VALIDATE_RULES from './validationSettings';
 import styles from './style.module.scss';
@@ -22,19 +23,10 @@ const EditCardForm = ({ cards, updateCard, removeCard }) => {
   const { id } = useParams();
   const editedCard = cards[id];
 
-  const [fields, setFields] = useState({ title: editedCard.title, text: editedCard.text });
+  const { fields, handleChange } = useFields({ title: editedCard.title, text: editedCard.text });
   const {
     isFieldValid, errorList, validateForm, validateField,
   } = useValidate(fields, VALIDATE_RULES);
-
-
-  const handleChange = (event) => {
-    const { target } = event;
-    setFields((prevFields) => ({
-      ...prevFields,
-      [target.name]: target.value,
-    }));
-  };
 
   const handleUpdateButtonClick = useCallback(() => {
     if (!validateForm()) {
@@ -42,12 +34,12 @@ const EditCardForm = ({ cards, updateCard, removeCard }) => {
     }
     updateCard({ id, fields });
     history.push(HOME_ROUTE);
-  }, [id, fields]);
+  }, [id, fields, validateForm]);
 
   const handleDeleteButtonClick = useCallback(() => {
     removeCard(id);
     history.push(HOME_ROUTE);
-  }, [id, fields]);
+  }, [id, history, removeCard]);
 
   return (
     <>

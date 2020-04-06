@@ -11,9 +11,7 @@ const useFields = (initialFields) => {
   }, [setFields]);
 
   return {
-    fields: {
-      ...fields,
-    },
+    fields,
     handleChange,
   };
 };

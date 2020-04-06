@@ -3,7 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/common/Input';
 import Textarea from 'components/common/Textarea';
+import withErrorMessage from 'components/hoc/withErrorMessage';
 import styles from './style.module.scss';
+
+const InputWithErrorMessage = withErrorMessage(Input);
+const TextareaWithErrorMessage = withErrorMessage(Textarea);
 
 /**
  * Return CardForm element.
@@ -17,7 +21,7 @@ const CardForm = ({
   fields, handleChange, handleBlur, errorList,
 }) => (
   <form className={styles.form}>
-    <Input
+    <InputWithErrorMessage
       value={fields.title}
       placeholder="Enter title from 4 to 12 letters"
       name="title"
@@ -25,7 +29,7 @@ const CardForm = ({
       handleChange={handleChange}
       handleBlur={handleBlur}
     />
-    <Textarea
+    <TextareaWithErrorMessage
       value={fields.text}
       placeholder="Enter text from 6 to 30 letters"
       name="text"
