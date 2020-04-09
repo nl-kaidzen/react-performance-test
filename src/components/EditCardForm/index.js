@@ -57,12 +57,15 @@ const EditCardForm = ({ cards, updateCard, removeCard }) => {
             onClick={handleUpdateButtonClick}
             type={BUTTON_TYPES_MAP.default}
             title="Update"
-          />
+          >
+            Update
+          </Button>
           <Button
             onClick={handleDeleteButtonClick}
             type={BUTTON_TYPES_MAP.delete}
-            title="Delete"
-          />
+          >
+            Delete
+          </Button>
         </div>
       </div>
     </>

@@ -15,7 +15,7 @@ const TYPE_TO_CLASSNAMES_MAP = {
  * @param {function} onClick -  callback for onClick-event.
  */
 
-const Button = ({ type, title, onClick }) => {
+const Button = ({ type, children, onClick }) => {
   const buttonType = BUTTON_TYPES_MAP[type];
   return (
     <button
@@ -23,7 +23,7 @@ const Button = ({ type, title, onClick }) => {
       className={TYPE_TO_CLASSNAMES_MAP[buttonType]}
       type="button"
     >
-      {title}
+      {children}
     </button>
   );
 };
@@ -31,7 +31,7 @@ const Button = ({ type, title, onClick }) => {
 Button.propTypes = {
   onClick: PropTypes.func.isRequired,
   type: PropTypes.oneOf([BUTTON_TYPES_MAP.default, BUTTON_TYPES_MAP.delete]).isRequired,
-  title: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired,
 };
 
 export default React.memo(Button);

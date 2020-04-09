@@ -44,8 +44,9 @@ const NewCardForm = ({ addCard }) => {
           <Button
             onClick={handleAddButtonClick}
             type={BUTTON_TYPES_MAP.default}
-            title="Save"
-          />
+          >
+            Save
+          </Button>
         </div>
       </div>
     </>
