@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useCallback } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import { getCardsFromStorage, setCardsToStorage } from 'helpers/storage';
+import { preventLeave } from 'helpers/preventLeave';
 import useCards from 'hooks/useCards';
 import { HOME_ROUTE, EDIT_CARD_ROUTE, CREATE_CARD_ROUTE } from 'constants/routes';
 import CardList from 'components/CardList';
@@ -13,11 +14,20 @@ import EditCardForm from 'components/EditCardForm';
  * Uses the useCards-hook to work with cards. Saves cards to the localStorage when unmounting.
  */
 const App = () => {
+  const memoizedCards = useMemo(() => getCardsFromStorage(), []);
   const {
     cards, addCard, updateCard, removeCard, toggleFavoriteStatus,
-  } = useCards(getCardsFromStorage());
+  } = useCards(memoizedCards);
 
-  useEffect(() => setCardsToStorage(cards), [cards]);
+  const leavePageHandler = useCallback((event) => {
+    preventLeave(event);
+    setCardsToStorage(cards);
+  }, [cards]);
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', leavePageHandler);
+    return () => window.removeEventListener('beforeunload', leavePageHandler);
+  }, [cards]);
 
   return (
     <main>

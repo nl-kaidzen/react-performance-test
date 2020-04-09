@@ -45,8 +45,6 @@ function useCards(cards) {
    */
   const updateCard = useCallback(
     ({ id, fields }) => {
-      // eslint-disable-next-line no-debugger
-      debugger;
       setCards((prevCardsState) => {
         const newCardsList = { ...prevCardsState };
         newCardsList[id] = {
@@ -66,10 +64,12 @@ function useCards(cards) {
 
   const toggleFavoriteStatus = useCallback(
     (id) => {
-      const newCardsList = { ...cardsState };
-      const updatedCardElement = newCardsList[id];
-      updatedCardElement.isFavorite = !updatedCardElement.isFavorite;
-      setCards(newCardsList);
+      setCards((prevCardsState) => {
+        const newCardsList = { ...prevCardsState };
+        const updatedCardElement = newCardsList[id];
+        updatedCardElement.isFavorite = !updatedCardElement.isFavorite;
+        return newCardsList;
+      });
     }, [setCards],
   );
 
