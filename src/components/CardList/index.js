@@ -16,10 +16,19 @@ import styles from './style.module.scss';
 const CardList = ({ cards, toggleCardFavoriteStatus }) => {
   const history = useHistory(HOME_ROUTE);
 
+
+  // Without useCallback
+
+  /* const handleFavoriteClick = (event) => {
+    const { currentTarget: { dataset } } = event;
+    toggleCardFavoriteStatus(dataset.id);
+  }; */
+
+  // With useCallback
   const handleFavoriteClick = useCallback((event) => {
     const { currentTarget: { dataset } } = event;
     toggleCardFavoriteStatus(dataset.id);
-  }, [toggleCardFavoriteStatus]);
+  }, []);
 
   const handleEditClick = useCallback((event) => {
     const { currentTarget: { dataset } } = event;
@@ -55,4 +64,4 @@ CardList.propTypes = {
   toggleCardFavoriteStatus: PropTypes.func.isRequired,
 };
 
-export default React.memo(CardList);
+export default CardList;
