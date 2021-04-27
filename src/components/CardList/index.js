@@ -16,7 +16,7 @@ import styles from './style.module.scss';
 const CardList = ({ cards, toggleCardFavoriteStatus }) => {
   const history = useHistory(HOME_ROUTE);
 
-  const handleFavoriteClick = useCallback((event) => {
+  /* const handleFavoriteClick = useCallback((event) => {
     const { currentTarget: { dataset } } = event;
     toggleCardFavoriteStatus(dataset.id);
   }, [toggleCardFavoriteStatus]);
@@ -24,7 +24,17 @@ const CardList = ({ cards, toggleCardFavoriteStatus }) => {
   const handleEditClick = useCallback((event) => {
     const { currentTarget: { dataset } } = event;
     history.push(generatePath(EDIT_CARD_ROUTE, { id: dataset.id }));
-  }, [history]);
+  }, [history]); */
+
+  const handleFavoriteClick = (event) => {
+    const { currentTarget: { dataset } } = event;
+    toggleCardFavoriteStatus(dataset.id);
+  };
+
+  const handleEditClick = (event) => {
+    const { currentTarget: { dataset } } = event;
+    history.push(generatePath(EDIT_CARD_ROUTE, { id: dataset.id }));
+  };
 
   const cardsList = (Object.entries(cards).map(([key, card]) => (
     <Card
@@ -55,4 +65,5 @@ CardList.propTypes = {
   toggleCardFavoriteStatus: PropTypes.func.isRequired,
 };
 
-export default React.memo(CardList);
+// export default React.memo(CardList);
+export default CardList;
