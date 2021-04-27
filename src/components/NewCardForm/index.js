@@ -57,5 +57,5 @@ NewCardForm.propTypes = {
   addCard: PropTypes.func.isRequired,
 };
 
-// export default NewCardForm;
-export default React.memo(NewCardForm);
+export default NewCardForm;
+// export default React.memo(NewCardForm);

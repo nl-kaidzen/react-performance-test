@@ -19,13 +19,18 @@ const CardList = ({ cards, toggleCardFavoriteStatus }) => {
 
   // Without useCallback
 
-  /* const handleFavoriteClick = (event) => {
+  const handleFavoriteClick = (event) => {
     const { currentTarget: { dataset } } = event;
     toggleCardFavoriteStatus(dataset.id);
-  }; */
+  };
+
+  const handleEditClick = (event) => {
+    const { currentTarget: { dataset } } = event;
+    history.push(generatePath(EDIT_CARD_ROUTE, { id: dataset.id }));
+  };
 
   // With useCallback
-  const handleFavoriteClick = useCallback((event) => {
+  /* const handleFavoriteClick = useCallback((event) => {
     const { currentTarget: { dataset } } = event;
     toggleCardFavoriteStatus(dataset.id);
   }, []);
@@ -33,7 +38,7 @@ const CardList = ({ cards, toggleCardFavoriteStatus }) => {
   const handleEditClick = useCallback((event) => {
     const { currentTarget: { dataset } } = event;
     history.push(generatePath(EDIT_CARD_ROUTE, { id: dataset.id }));
-  }, [history]);
+  }, [history]); */
 
   const cardsList = (Object.entries(cards).map(([key, card]) => (
     <Card
@@ -65,3 +70,4 @@ CardList.propTypes = {
 };
 
 export default CardList;
+// export default React.memo(CardList);
